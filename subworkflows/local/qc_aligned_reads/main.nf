@@ -1,8 +1,10 @@
-include { CRAMINO        } from '../../../modules/nf-core/cramino/main'
-include { FASTQC         } from '../../../modules/nf-core/fastqc/main'
-include { MOSDEPTH       } from '../../../modules/nf-core/mosdepth/main'
-include { SAMBAMBA_DEPTH } from '../../../modules/nf-core/sambamba/depth/main'
-include { SAMTOOLS_VIEW  } from '../../../modules/nf-core/samtools/view/main'
+include { CRAMINO                } from '../../../modules/nf-core/cramino/main'
+include { CRAMINO_TO_MQC         } from '../../../modules/local/cramino_to_mqc/main'
+include { FASTQC                 } from '../../../modules/nf-core/fastqc/main'
+include { MOSDEPTH               } from '../../../modules/nf-core/mosdepth/main'
+include { MOSDEPTH_REGIONS_TO_MQC } from '../../../modules/local/mosdepth_regions_to_mqc/main'
+include { SAMBAMBA_DEPTH         } from '../../../modules/nf-core/sambamba/depth/main'
+include { SAMTOOLS_VIEW          } from '../../../modules/nf-core/samtools/view/main'
 workflow QC_ALIGNED_READS {
     take:
     ch_bam_bai // channel: [ val(meta), [bam, bai] ]
@@ -40,11 +42,21 @@ workflow QC_ALIGNED_READS {
         ch_bam_bai_for_cramino
     )
 
+    CRAMINO_TO_MQC(
+        CRAMINO.out.stats
+    )
+
     ch_mosdepth_in = ch_bam_bai.combine(ch_mosdepth_bed_list)
 
     MOSDEPTH(
         ch_mosdepth_in,
         ch_fasta,
+    )
+
+    MOSDEPTH_REGIONS_TO_MQC(
+        MOSDEPTH.out.regions_bed
+            .join(MOSDEPTH.out.thresholds_bed)
+            .filter { _meta, _regions, thresholds -> thresholds }
     )
 
     if (run_sambamba_depth) {
@@ -60,6 +72,8 @@ workflow QC_ALIGNED_READS {
     emit:
     cramino_stats           = CRAMINO.out.stats // channel: [ val(meta), path(txt)        ]
     cramino_arrow           = CRAMINO.out.arrow // channel: [ val(meta), path(arrow)      ]
+    cramino_mqc             = CRAMINO_TO_MQC.out.mqc // channel: [ val(meta), path(tsv)        ]
+    mosdepth_regions_mqc    = MOSDEPTH_REGIONS_TO_MQC.out.mqc // channel: [ val(meta), path(tsv)        ]
     fastqc_html             = FASTQC.out.html // channel: [ val(meta), path(html)       ]
     fastqc_zip              = FASTQC.out.zip // channel: [ val(meta), path(zip)        ]
     mosdepth_summary        = MOSDEPTH.out.summary_txt // channel: [ val(meta), path(txt)        ]

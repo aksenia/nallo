@@ -440,6 +440,8 @@ workflow NALLO {
                 ? QC_ALIGNED_READS.out.mosdepth_regions_dist
                 : QC_ALIGNED_READS.out.mosdepth_global_dist).collect { _meta, metrics -> metrics }
         )
+        ch_multiqc_files = ch_multiqc_files.mix(QC_ALIGNED_READS.out.cramino_mqc.collect { _meta, mqc -> mqc }.ifEmpty([]))
+        ch_multiqc_files = ch_multiqc_files.mix(QC_ALIGNED_READS.out.mosdepth_regions_mqc.collect { _meta, mqc -> mqc }.ifEmpty([]))
     }
 
     /*
