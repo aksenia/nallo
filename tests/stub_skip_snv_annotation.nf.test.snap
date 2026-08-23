@@ -58,8 +58,9 @@
                     "perl-math-cdf": 0.1
                 },
                 "ENSEMBLVEP_SV": {
-                    "ensemblvep": 110.0,
-                    "tabix": 1.17
+                    "ensemblvep": 116.1,
+                    "perl-math-cdf": 0.1,
+                    "tabix": "1.23.1"
                 },
                 "GAWK_EXTRACT_REGIONS": {
                     "gawk": "5.3.1"
@@ -232,10 +233,10 @@
                 "visualization_tracks/HG002_Revio/HG002_Revio_hificnv.maf.bw"
             ]
         ],
-        "timestamp": "2026-08-13T15:58:41.924600792",
+        "timestamp": "2026-08-23T14:53:23.203526795",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.07.0"
+            "nextflow": "26.04.6"
         }
     },
     "Test Peddy without annotation": {
