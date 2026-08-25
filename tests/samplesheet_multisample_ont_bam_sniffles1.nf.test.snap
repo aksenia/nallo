@@ -1,7 +1,7 @@
 {
     "samplesheet_multisample_ont_bam | --preset ONT_R10 --sv_callers sniffles1 --phaser whatshap --alignment_processes 1 --snv_calling_processes 1 --publish_unannotated_family_svs": {
         "content": [
-            303,
+            306,
             {
                 "BCFTOOLS_CONCAT": {
                     "bcftools": 1.21
@@ -57,6 +57,9 @@
                 "CRAMINO": {
                     "cramino": "1.1.0"
                 },
+                "CRAMINO_TO_MQC": {
+                    "python": "3.8.3"
+                },
                 "CREATE_SAMPLES_FILE": {
                     "gawk": "5.3.1"
                 },
@@ -78,12 +81,14 @@
                     "echtvar": "0.2.4"
                 },
                 "ENSEMBLVEP_SNV": {
-                    "ensemblvep": 110.0,
-                    "tabix": 1.17
+                    "ensemblvep": 116.1,
+                    "perl-math-cdf": 0.1,
+                    "tabix": "1.23.1"
                 },
                 "ENSEMBLVEP_SV": {
-                    "ensemblvep": 110.0,
-                    "tabix": 1.17
+                    "ensemblvep": 116.1,
+                    "perl-math-cdf": 0.1,
+                    "tabix": "1.23.1"
                 },
                 "FASTQC": {
                     "fastqc": "0.12.1"
@@ -498,6 +503,9 @@
                 "multiqc/multiqc_data/mosdepth_perchrom.txt",
                 "multiqc/multiqc_data/multiqc.log",
                 "multiqc/multiqc_data/multiqc.parquet",
+                "multiqc/multiqc_data/multiqc_HG002_ONT_A_cramino_aligned_cramino_table.txt",
+                "multiqc/multiqc_data/multiqc_HG002_ONT_B_cramino_aligned_cramino_table.txt",
+                "multiqc/multiqc_data/multiqc_HG002_ONT_C_cramino_aligned_cramino_table.txt",
                 "multiqc/multiqc_data/multiqc_bcftools_stats.txt",
                 "multiqc/multiqc_data/multiqc_citations.txt",
                 "multiqc/multiqc_data/multiqc_data.json",
@@ -519,6 +527,9 @@
                 "multiqc/multiqc_data/whatshap-stats-table.txt",
                 "multiqc/multiqc_plots",
                 "multiqc/multiqc_plots/pdf",
+                "multiqc/multiqc_plots/pdf/HG002_ONT_A_cramino_aligned_cramino_table.pdf",
+                "multiqc/multiqc_plots/pdf/HG002_ONT_B_cramino_aligned_cramino_table.pdf",
+                "multiqc/multiqc_plots/pdf/HG002_ONT_C_cramino_aligned_cramino_table.pdf",
                 "multiqc/multiqc_plots/pdf/bcftools-stats-subtypes-cnt.pdf",
                 "multiqc/multiqc_plots/pdf/bcftools-stats-subtypes-pct.pdf",
                 "multiqc/multiqc_plots/pdf/bcftools_stats_indel-lengths-cnt.pdf",
@@ -553,6 +564,9 @@
                 "multiqc/multiqc_plots/pdf/somalier_stats.pdf",
                 "multiqc/multiqc_plots/pdf/whatshap-stats-table.pdf",
                 "multiqc/multiqc_plots/png",
+                "multiqc/multiqc_plots/png/HG002_ONT_A_cramino_aligned_cramino_table.png",
+                "multiqc/multiqc_plots/png/HG002_ONT_B_cramino_aligned_cramino_table.png",
+                "multiqc/multiqc_plots/png/HG002_ONT_C_cramino_aligned_cramino_table.png",
                 "multiqc/multiqc_plots/png/bcftools-stats-subtypes-cnt.png",
                 "multiqc/multiqc_plots/png/bcftools-stats-subtypes-pct.png",
                 "multiqc/multiqc_plots/png/bcftools_stats_indel-lengths-cnt.png",
@@ -587,6 +601,9 @@
                 "multiqc/multiqc_plots/png/somalier_stats.png",
                 "multiqc/multiqc_plots/png/whatshap-stats-table.png",
                 "multiqc/multiqc_plots/svg",
+                "multiqc/multiqc_plots/svg/HG002_ONT_A_cramino_aligned_cramino_table.svg",
+                "multiqc/multiqc_plots/svg/HG002_ONT_B_cramino_aligned_cramino_table.svg",
+                "multiqc/multiqc_plots/svg/HG002_ONT_C_cramino_aligned_cramino_table.svg",
                 "multiqc/multiqc_plots/svg/bcftools-stats-subtypes-cnt.svg",
                 "multiqc/multiqc_plots/svg/bcftools-stats-subtypes-pct.svg",
                 "multiqc/multiqc_plots/svg/bcftools_stats_indel-lengths-cnt.svg",
@@ -1008,6 +1025,9 @@
                 "mosdepth_cov_dist.txt:md5,34d42c2b23250d289ce2c0adf394891f",
                 "mosdepth_cumcov_dist.txt:md5,34d42c2b23250d289ce2c0adf394891f",
                 "mosdepth_perchrom.txt:md5,ca490536a8c80cf070199755d8c61eb0",
+                "multiqc_HG002_ONT_A_cramino_aligned_cramino_table.txt:md5,df0c7831d41d63a984db19c1b636a4fd",
+                "multiqc_HG002_ONT_B_cramino_aligned_cramino_table.txt:md5,e2f5dbac99bce948515e69a549b026ef",
+                "multiqc_HG002_ONT_C_cramino_aligned_cramino_table.txt:md5,807a7af6e55e09b52bece93be19af28d",
                 "multiqc_bcftools_stats.txt:md5,ad4f3c2407fcdbc530e64ebe402902a7",
                 "multiqc_citations.txt:md5,b3367d20aa6e8306ca1c32c0f5993899",
                 "multiqc_fastqc.txt:md5,45c48809ef207ece2422fa33a86c30c7",
@@ -1172,7 +1192,7 @@
                 
             ]
         ],
-        "timestamp": "2026-08-22T11:15:05.838068378",
+        "timestamp": "2026-08-25T12:18:35.423311469",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
