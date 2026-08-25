@@ -19,34 +19,114 @@ process MOSDEPTH_REGIONS_TO_MQC {
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def header = [
-        "# id: '${prefix}_mosdepth_per_region'",
-        "# section_name: 'Per-region coverage'",
-        "# description: 'Mean coverage and bases covered at ≥20X and ≥30X per target region'",
-        "# order: 600",
-        "# plot_type: 'table'",
-        "# pconfig:",
-        "#    id: '${prefix}_mosdepth_per_region_table'",
-        "Gene\\tChrom\\tStart\\tEnd\\tMean coverage\\t% bases ≥20X\\t% bases ≥30X",
-    ].join("\\n")
     """
-    echo -e "${header}" > ${prefix}_mqc.tsv
-    python3 -c "
+python3 << 'PYEOF'
 import gzip
-def read_bed(path):
-    with gzip.open(path, 'rt') as f:
-        return [line.strip().split('\\t') for line in f if line.strip() and not line.startswith('#')]
-regions = read_bed('${regions_bed}')
-thresholds = read_bed('${thresholds_bed}')
-for r, t in zip(regions, thresholds):
-    has_name = len(r) >= 5
-    name = r[3] if has_name else f'{r[0]}:{r[1]}-{r[2]}'
-    mean = r[4] if has_name else r[3]
-    length = int(r[2]) - int(r[1])
-    pct_20x = round(int(t[4]) / length * 100, 2) if length > 0 else 0
-    pct_30x = round(int(t[5]) / length * 100, 2) if length > 0 else 0
-    print(name, r[0], r[1], r[2], mean, pct_20x, pct_30x, sep='\\t')
-" >> ${prefix}_mqc.tsv
+from collections import Counter
+
+def parse_regions(path):
+    by_region = {}
+    with gzip.open(path, 'rt') as fh:
+        for line in fh:
+            fields = line.rstrip('\\n').split('\\t')
+            if not fields or fields[0].startswith('#'):
+                continue
+            if len(fields) == 5:
+                chrom, start, end, name, mean = fields
+                by_region[(chrom, int(start), int(end))] = (name, float(mean))
+            elif len(fields) == 4:
+                chrom, start, end, mean = fields
+                by_region[(chrom, int(start), int(end))] = (None, float(mean))
+    return by_region
+
+def parse_thresholds(path):
+    with gzip.open(path, 'rt') as fh:
+        lines = [l.rstrip('\\n') for l in fh]
+    if not lines:
+        return [], {}
+    header = lines[0].lstrip('#').split('\\t')
+    threshold_vals = [int(col.rstrip('X')) for col in header[4:]]
+    by_region = {}
+    for line in lines[1:]:
+        if not line.strip():
+            continue
+        fields = line.split('\\t')
+        chrom, start, end, name = fields[:4]
+        counts = [int(x) for x in fields[4:]]
+        by_region[(chrom, int(start), int(end))] = (name, counts)
+    return threshold_vals, by_region
+
+sample_name = '${prefix}'
+regions_data = parse_regions('${regions_bed}')
+threshold_vals, thresh_data = parse_thresholds('${thresholds_bed}')
+
+region_keys = list(thresh_data.keys())
+for key in regions_data:
+    if key not in thresh_data:
+        region_keys.append(key)
+
+def get_region_name(key):
+    t_name = thresh_data[key][0] if key in thresh_data else None
+    r_name = regions_data[key][0] if key in regions_data else None
+    name = t_name or r_name
+    return name if name is not None else f"{key[0]}:{key[1]}-{key[2]}"
+
+name_counts = Counter(get_region_name(k) for k in region_keys)
+duplicate_names = {name for name, count in name_counts.items() if count > 1}
+
+out_lines = [
+    "# id: 'mosdepth-per-region-coverage'",
+    "# section_name: 'Per-region coverage'",
+    "# description: 'Mean coverage and the percentage of bases at each requested threshold, per target region. Generated when mosdepth is run with --by BED_FILE and --thresholds.'",
+    "# plot_type: 'table'",
+    "# pconfig:",
+    "#     id: 'mosdepth-per-region-table'",
+    "#     title: 'Mosdepth: Per-region coverage'",
+    "#     col1_header: 'Sample | Region'",
+    "# headers:",
+    "#     coordinates:",
+    "#         title: 'Coordinates'",
+    "#         description: 'Chromosome:start-end'",
+    "#         scale: False",
+    "#     mean_coverage:",
+    "#         title: 'Mean Cov.'",
+    "#         description: 'Mean coverage across the region'",
+    "#         min: 0",
+    "#         suffix: 'X'",
+    "#         scale: 'BuPu'",
+]
+for t in threshold_vals:
+    out_lines += [
+        f"#     pct_at_{t}x:",
+        f"#         title: '\\u2265 {t}X'",
+        f"#         description: 'Percentage of bases in the region covered at least {t}X'",
+        "#         min: 0",
+        "#         max: 100",
+        "#         suffix: '%'",
+        "#         scale: 'RdYlGn'",
+    ]
+
+col_keys = ['coordinates', 'mean_coverage'] + [f'pct_at_{t}x' for t in threshold_vals]
+out_lines.append('Sample | Region\\t' + '\\t'.join(col_keys))
+
+for key in region_keys:
+    chrom, start, end = key
+    name = get_region_name(key)
+    display_name = f"{name} ({chrom}:{start}-{end})" if name in duplicate_names else name
+    row_key = f"{sample_name} | {display_name}"
+    coords = f"{chrom}:{start}-{end}"
+    mean = f"{regions_data[key][1]:.2f}" if key in regions_data else ''
+    if key in thresh_data:
+        length = end - start
+        _, counts = thresh_data[key]
+        pct_cols = [str(round(100.0 * c / length, 2) if length > 0 else 0.0) for c in counts]
+    else:
+        pct_cols = [''] * len(threshold_vals)
+    out_lines.append('\\t'.join([row_key, coords, mean] + pct_cols))
+
+with open('${prefix}_mqc.tsv', 'w') as fh:
+    fh.write('\\n'.join(out_lines) + '\\n')
+PYEOF
     """
 
     stub:
