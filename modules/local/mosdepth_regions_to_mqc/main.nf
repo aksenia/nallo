@@ -1,5 +1,5 @@
 process MOSDEPTH_REGIONS_TO_MQC {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_single'
 
     conda "conda-forge::python=3.8.3"
@@ -39,10 +39,13 @@ def read_bed(path):
 regions = read_bed('${regions_bed}')
 thresholds = read_bed('${thresholds_bed}')
 for r, t in zip(regions, thresholds):
+    has_name = len(r) >= 5
+    name = r[3] if has_name else f'{r[0]}:{r[1]}-{r[2]}'
+    mean = r[4] if has_name else r[3]
     length = int(r[2]) - int(r[1])
     pct_20x = round(int(t[4]) / length * 100, 2) if length > 0 else 0
     pct_30x = round(int(t[5]) / length * 100, 2) if length > 0 else 0
-    print(r[3], r[0], r[1], r[2], r[4], pct_20x, pct_30x, sep='\\t')
+    print(name, r[0], r[1], r[2], mean, pct_20x, pct_30x, sep='\\t')
 " >> ${prefix}_mqc.tsv
     """
 
