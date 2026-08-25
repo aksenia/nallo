@@ -1,10 +1,10 @@
-include { CRAMINO                } from '../../../modules/nf-core/cramino/main'
-include { CRAMINO_TO_MQC         } from '../../../modules/local/cramino_to_mqc/main'
-include { FASTQC                 } from '../../../modules/nf-core/fastqc/main'
-include { MOSDEPTH               } from '../../../modules/nf-core/mosdepth/main'
+include { CRAMINO                 } from '../../../modules/nf-core/cramino/main'
+include { CRAMINO_TO_MQC          } from '../../../modules/local/cramino_to_mqc/main'
+include { FASTQC                  } from '../../../modules/nf-core/fastqc/main'
+include { MOSDEPTH                } from '../../../modules/nf-core/mosdepth/main'
 include { MOSDEPTH_REGIONS_TO_MQC } from '../../../modules/local/mosdepth_regions_to_mqc/main'
-include { SAMBAMBA_DEPTH         } from '../../../modules/nf-core/sambamba/depth/main'
-include { SAMTOOLS_VIEW          } from '../../../modules/nf-core/samtools/view/main'
+include { SAMBAMBA_DEPTH          } from '../../../modules/nf-core/sambamba/depth/main'
+include { SAMTOOLS_VIEW           } from '../../../modules/nf-core/samtools/view/main'
 workflow QC_ALIGNED_READS {
     take:
     ch_bam_bai // channel: [ val(meta), [bam, bai] ]
@@ -54,9 +54,7 @@ workflow QC_ALIGNED_READS {
     )
 
     MOSDEPTH_REGIONS_TO_MQC(
-        MOSDEPTH.out.regions_bed
-            .join(MOSDEPTH.out.thresholds_bed)
-            .filter { _meta, _regions, thresholds -> thresholds }
+        MOSDEPTH.out.regions_bed.join(MOSDEPTH.out.thresholds_bed, remainder: true).filter { _meta, _regions, thresholds -> thresholds }
     )
 
     if (run_sambamba_depth) {
