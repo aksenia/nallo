@@ -560,7 +560,7 @@ def validateParameterCombinations(statusMap, workflowMap, workflowDependencies, 
 //
 // Lookup all workflows that needs to be active for another workflow
 //
-def checkWorkflowDependencies(skip: String, combinationsMap: Map, statusMap: Map, workflowMap: Map, errors: List) {
+def checkWorkflowDependencies(skip, combinationsMap, statusMap, workflowMap, errors) {
 
     // Lookup the workflow associated with the --skip_xxx parameter
     def currentWorkflow = workflowMap.find { _key, mapValue -> mapValue == skip }?.key
@@ -592,7 +592,7 @@ def checkWorkflowDependencies(skip: String, combinationsMap: Map, statusMap: Map
 //
 // Lookup if a file is required by any workflows, and add to errors
 //
-def checkFileDependencies(file: String, combinationsMap: Map, statusMap: Map, workflowMap: Map, errors: List) {
+def checkFileDependencies(file, combinationsMap, statusMap, workflowMap, errors) {
     // Get all workflows required by a file
     def workflowThatRequiresFile = findKeysForValue(file, combinationsMap)
 
@@ -615,7 +615,7 @@ def checkFileDependencies(file: String, combinationsMap: Map, statusMap: Map, wo
 //
 // Find the workflow skips that are not currently active
 //
-def findRequiredSkips(paramType, requiredWorkflows: Set<String>, statusMap: Map, workflowMap: Map) {
+def findRequiredSkips(paramType, requiredWorkflows, statusMap, workflowMap) {
 
     def requiredSkips = []
 
@@ -634,7 +634,7 @@ def findRequiredSkips(paramType, requiredWorkflows: Set<String>, statusMap: Map,
     return requiredSkips
 }
 
-def findKeysForValue(valueToFind, map: Map) {
+def findKeysForValue(valueToFind, map) {
 
     def keys = []
 
