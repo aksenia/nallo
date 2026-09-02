@@ -94,6 +94,7 @@ workflow NALLO {
     ch_fai
     ch_genmod_reduced_penetrance
     ch_genmod_score_config_snvs
+    ch_genmod_score_config_snvs_mito
     ch_genmod_score_config_svs
     ch_gens_baf_positions
     ch_gens_coverage_bins
@@ -971,12 +972,18 @@ workflow NALLO {
     if (!val_skip_rank_variants) {
 
         ch_snvs_to_rank = buildRankVariantsInputChannel(
-            ANN_CSQ_PLI_SNV.out.vcf,
+            ANN_CSQ_PLI_SNV.out.vcf.filter { meta, _vcf -> meta.genome != 'mitochondrial' },
             SOMALIER_PED_FAMILY.out.ped,
             'snv',
             ch_genmod_score_config_snvs,
             ch_samplesheet,
-        )
+        ).mix(buildRankVariantsInputChannel(
+            ANN_CSQ_PLI_SNV.out.vcf.filter { meta, _vcf -> meta.genome == 'mitochondrial' },
+            SOMALIER_PED_FAMILY.out.ped,
+            'snv',
+            ch_genmod_score_config_snvs_mito,
+            ch_samplesheet,
+        ))
 
         ch_svs_to_rank = buildRankVariantsInputChannel(
             ANN_CSQ_PLI_SVS.out.vcf.map { meta, vcf -> [meta + [family_id: meta.id], vcf] },
