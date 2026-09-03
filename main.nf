@@ -159,6 +159,7 @@ workflow GENOMICMEDICINESWEDEN_NALLO {
         ch_fai,
         ch_genmod_reduced_penetrance,
         ch_genmod_score_config_snvs,
+        ch_genmod_score_config_snvs_mito,
         ch_genmod_score_config_svs,
         ch_gens_baf_positions,
         ch_gens_coverage_bins,
