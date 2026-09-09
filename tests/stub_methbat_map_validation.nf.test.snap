@@ -90,16 +90,18 @@
                     "echtvar": "0.2.4"
                 },
                 "ENSEMBLVEP_FILTERVEP": {
-                    "ensemblvep": 115.2,
+                    "ensemblvep": 116.1,
                     "perl-math-cdf": 0.1
                 },
                 "ENSEMBLVEP_SNV": {
-                    "ensemblvep": 110.0,
-                    "tabix": 1.17
+                    "ensemblvep": 116.1,
+                    "perl-math-cdf": 0.1,
+                    "tabix": "1.23.1"
                 },
                 "ENSEMBLVEP_SV": {
-                    "ensemblvep": 110.0,
-                    "tabix": 1.17
+                    "ensemblvep": 116.1,
+                    "perl-math-cdf": 0.1,
+                    "tabix": "1.23.1"
                 },
                 "FASTQC": {
                     "fastqc": "0.12.1"
@@ -145,6 +147,10 @@
                 },
                 "HIFICNV": {
                     "hificnv": "1.0.0-36e6461"
+                },
+                "HTSLIB_BGZIPTABIX": {
+                    "htslib": 1.24,
+                    "xz": "5.8.3"
                 },
                 "LONGPHASE_HAPLOTAG": {
                     "longphase": "2.0.1"
@@ -310,7 +316,7 @@
                 }
             }
         ],
-        "timestamp": "2026-08-29T13:18:47.236760251",
+        "timestamp": "2026-09-09T07:52:14.011634583",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

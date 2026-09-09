@@ -165,14 +165,13 @@
                     },
                     "ensemblvep/filtervep": {
                         "branch": "master",
-                        "git_sha": "890fdcff71928fc1470d3e669d4c430c8c770297",
+                        "git_sha": "7047ebe92547d7f029fa6e71d2c893d5fb131938",
                         "installed_by": ["vcf_filter_bcftools_ensemblvep"]
                     },
                     "ensemblvep/vep": {
                         "branch": "master",
-                        "git_sha": "890fdcff71928fc1470d3e669d4c430c8c770297",
-                        "installed_by": ["modules"],
-                        "patch": "modules/nf-core/ensemblvep/vep/ensemblvep-vep.diff"
+                        "git_sha": "7047ebe92547d7f029fa6e71d2c893d5fb131938",
+                        "installed_by": ["modules"]
                     },
                     "fastqc": {
                         "branch": "master",
@@ -254,6 +253,11 @@
                     "hiphase": {
                         "branch": "master",
                         "git_sha": "32d9d7b17b837f68b7f3916f53bfa90d1b434fdd",
+                        "installed_by": ["modules"]
+                    },
+                    "htslib/bgziptabix": {
+                        "branch": "master",
+                        "git_sha": "37f69c8ca3eb3d038a5d44f33a329e49f44bd4f2",
                         "installed_by": ["modules"]
                     },
                     "longphase/haplotag": {
@@ -558,7 +562,7 @@
                     },
                     "vcf_filter_bcftools_ensemblvep": {
                         "branch": "master",
-                        "git_sha": "95518d261ec0561b3dffb332944bebc5ef85efcf",
+                        "git_sha": "7b581d0afbf489e9a04cc54bb739445ecf316e96",
                         "installed_by": ["subworkflows"]
                     }
                 }
