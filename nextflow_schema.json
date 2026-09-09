@@ -352,7 +352,14 @@
                     "exists": true,
                     "format": "path",
                     "fa_icon": "fas fa-file",
-                    "description": "A SNV rank model config file for genmod."
+                    "description": "A rank model config file for genmod, used for nuclear SNV scoring."
+                },
+                "genmod_score_config_snvs_mito": {
+                    "type": "string",
+                    "exists": true,
+                    "format": "path",
+                    "fa_icon": "fas fa-file",
+                    "description": "A rank model config file for genmod, used for mitochondrial SNV scoring. Should reference only fields produced by the MT VEP command."
                 },
                 "genmod_score_config_svs": {
                     "type": "string",
@@ -870,7 +877,12 @@
                 "extra_vep_options_snv": {
                     "type": "string",
                     "default": "--buffer_size 20000 --appris --biotype --canonical --ccds --domains --exclude_predicted --force_overwrite --hgvs --humdiv --no_progress --numbers --polyphen p --protein --regulatory --sift p --symbol --tsl --uniprot --no_stats",
-                    "description": "Options appended to the VEP core command for SNV annotation (applied to both nuclear and mitochondrial SNVs). The default enables standard enrichment annotations. To add plugins such as CADD or SpliceAI, supply the default flags plus your additions. Plugin files must be included in `vep_plugin_files`."
+                    "description": "Options appended to the VEP core command for nuclear SNV annotation. The default enables standard enrichment annotations. To add plugins such as CADD or SpliceAI, supply the default flags plus your additions. Plugin files must be included in `vep_plugin_files`."
+                },
+                "extra_vep_options_snv_mito": {
+                    "type": "string",
+                    "default": "--appris --biotype --buffer_size 20000 --canonical --ccds --domains --exclude_predicted --force_overwrite --hgvs --no_progress --numbers --protein --regulatory --symbol --tsl --uniprot --no_stats",
+                    "description": "Options appended to the VEP core command for mitochondrial SNV annotation. Nuclear-specific flags (--sift, --polyphen, --humdiv) are excluded. To add MT-specific plugins such as gnomADMt, supply the default flags plus your additions. Plugin files must be included in `vep_plugin_files`."
                 },
                 "extra_vep_options_sv": {
                     "type": "string",
