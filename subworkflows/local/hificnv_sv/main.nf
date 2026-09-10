@@ -12,6 +12,7 @@ workflow HIFICNV_SV {
     create_maf_track //     bool: [mandatory] should HiFiCNV produce a MAF track
 
     main:
+    ch_for_hificnv = channel.empty()
     if (create_maf_track) {
         ch_for_hificnv = ch_bam_bai.join(ch_snvs, failOnMismatch: true, failOnDuplicate: true)
     }

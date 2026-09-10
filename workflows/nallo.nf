@@ -668,6 +668,7 @@ workflow NALLO {
             .mix(CALL_SVS.out.sv_calls_indexed)
 
         // Optionally filter to call regions
+        ch_sv_calls_filtered = channel.empty()
         if (val_sv_call_regions) {
             BCFTOOLS_VIEW_SVS(
                 ch_sv_calls_all,

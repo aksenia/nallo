@@ -13,6 +13,7 @@ workflow SAWFISH_SV {
     force_joint_call_single_samples //     bool: [mandatory] force joint-calling even for single samples
 
     main:
+    ch_bam_vcf_for_discover = channel.empty()
     if (create_maf_track) {
         ch_bam_vcf_for_discover = ch_bam_bai.join(ch_snvs, failOnMismatch: true, failOnDuplicate: true)
     }
