@@ -42,6 +42,7 @@ nextflow_pipeline {
                 methbat_map                    = null
                 read_aligner                   = 'mm2plus'
                 assembly_aligner               = 'mm2plus'
+                skip_sex_check                 = true
                 skip_genome_assembly           = true
                 skip_portello                  = true
             }
