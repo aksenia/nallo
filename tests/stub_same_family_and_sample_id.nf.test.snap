@@ -500,6 +500,9 @@
                 "snvs/family/HG002_Revio/HG002_Revio_snvs_annotated_ranked_clinical.vcf.gz.tbi",
                 "snvs/family/HG002_Revio/HG002_Revio_snvs_annotated_ranked_research.vcf.gz",
                 "snvs/family/HG002_Revio/HG002_Revio_snvs_annotated_ranked_research.vcf.gz.tbi",
+                "snvs/family/HG002_Revio/precalled_input",
+                "snvs/family/HG002_Revio/precalled_input/HG002_Revio_concat.vcf.gz",
+                "snvs/family/HG002_Revio/precalled_input/HG002_Revio_concat.vcf.gz.tbi",
                 "snvs/sample",
                 "snvs/sample/HG002_Revio",
                 "snvs/sample/HG002_Revio/HG002_Revio_deepvariant_snvs.vcf.gz",
@@ -511,6 +514,9 @@
                 "svs/family/HG002_Revio/HG002_Revio_svs_annotated_ranked_clinical.vcf.gz.tbi",
                 "svs/family/HG002_Revio/HG002_Revio_svs_annotated_ranked_research.vcf.gz",
                 "svs/family/HG002_Revio/HG002_Revio_svs_annotated_ranked_research.vcf.gz.tbi",
+                "svs/family/HG002_Revio/precalled_input",
+                "svs/family/HG002_Revio/precalled_input/HG002_Revio_svdb_merge_by_family.vcf.gz",
+                "svs/family/HG002_Revio/precalled_input/HG002_Revio_svdb_merge_by_family.vcf.gz.tbi",
                 "visualization_tracks",
                 "visualization_tracks/HG002_Revio",
                 "visualization_tracks/HG002_Revio/HG002_Revio_hificnv.copynum.bedgraph",
@@ -521,7 +527,7 @@
                 "visualization_tracks/HG002_Revio/HG002_Revio_pbcpgtools.hap2.bw"
             ]
         ],
-        "timestamp": "2026-09-10T17:03:27.156786623",
+        "timestamp": "2026-09-11T17:39:57.959231034",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
