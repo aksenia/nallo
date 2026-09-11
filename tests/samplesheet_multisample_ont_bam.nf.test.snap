@@ -664,9 +664,15 @@
                 "snvs/family/FAM",
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_research.vcf.gz",
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_research.vcf.gz.tbi",
+                "snvs/family/FAM/precalled_input",
+                "snvs/family/FAM/precalled_input/FAM_concat.vcf.gz",
+                "snvs/family/FAM/precalled_input/FAM_concat.vcf.gz.tbi",
                 "snvs/family/FAM2",
                 "snvs/family/FAM2/FAM2_snvs_annotated_ranked_research.vcf.gz",
                 "snvs/family/FAM2/FAM2_snvs_annotated_ranked_research.vcf.gz.tbi",
+                "snvs/family/FAM2/precalled_input",
+                "snvs/family/FAM2/precalled_input/FAM2_concat.vcf.gz",
+                "snvs/family/FAM2/precalled_input/FAM2_concat.vcf.gz.tbi",
                 "snvs/sample",
                 "snvs/sample/HG002_ONT_A",
                 "snvs/sample/HG002_ONT_A/HG002_ONT_A_deepvariant_snvs.vcf.gz",
@@ -684,11 +690,17 @@
                 "svs/family/FAM/FAM_sniffles1_svs.vcf.gz.tbi",
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz",
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz.tbi",
+                "svs/family/FAM/precalled_input",
+                "svs/family/FAM/precalled_input/FAM_svdb_merge_by_family.vcf.gz",
+                "svs/family/FAM/precalled_input/FAM_svdb_merge_by_family.vcf.gz.tbi",
                 "svs/family/FAM2",
                 "svs/family/FAM2/FAM2_sniffles1_svs.vcf.gz",
                 "svs/family/FAM2/FAM2_sniffles1_svs.vcf.gz.tbi",
                 "svs/family/FAM2/FAM2_svs_annotated_ranked_research.vcf.gz",
                 "svs/family/FAM2/FAM2_svs_annotated_ranked_research.vcf.gz.tbi",
+                "svs/family/FAM2/precalled_input",
+                "svs/family/FAM2/precalled_input/FAM2_svdb_merge_by_family.vcf.gz",
+                "svs/family/FAM2/precalled_input/FAM2_svdb_merge_by_family.vcf.gz.tbi",
                 "visualization_tracks",
                 "visualization_tracks/HG002_ONT_A",
                 "visualization_tracks/HG002_ONT_A/HG002_ONT_A_modkit_pileup_combined.bw",
@@ -985,8 +997,16 @@
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM, chr20], sampleCount=2, variantCount=135, phased=false, phasedAutodetect=false]"
                 ],
                 [
+                    "FAM_concat.vcf.gz",
+                    "VcfFile [chromosomes=[chrX, chr16, chr17, chr20], sampleCount=2, variantCount=127, phased=false, phasedAutodetect=false]"
+                ],
+                [
                     "FAM2_snvs_annotated_ranked_research.vcf.gz",
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM, chr20], sampleCount=1, variantCount=134, phased=false, phasedAutodetect=false]"
+                ],
+                [
+                    "FAM2_concat.vcf.gz",
+                    "VcfFile [chromosomes=[chrX, chr16, chr17, chr20], sampleCount=1, variantCount=126, phased=false, phasedAutodetect=false]"
                 ],
                 [
                     "HG002_ONT_A_deepvariant_snvs.vcf.gz",
@@ -1009,11 +1029,19 @@
                     "VcfFile [chromosomes=[chrX, chr16, chr17], sampleCount=2, variantCount=7, phased=false, phasedAutodetect=false]"
                 ],
                 [
+                    "FAM_svdb_merge_by_family.vcf.gz",
+                    "VcfFile [chromosomes=[chrX, chr16, chr17], sampleCount=2, variantCount=7, phased=false, phasedAutodetect=false]"
+                ],
+                [
                     "FAM2_sniffles1_svs.vcf.gz",
                     "VcfFile [chromosomes=[chrX, chr16, chr17], sampleCount=1, variantCount=7, phased=false, phasedAutodetect=false]"
                 ],
                 [
                     "FAM2_svs_annotated_ranked_research.vcf.gz",
+                    "VcfFile [chromosomes=[chrX, chr16, chr17], sampleCount=1, variantCount=7, phased=false, phasedAutodetect=false]"
+                ],
+                [
+                    "FAM2_svdb_merge_by_family.vcf.gz",
                     "VcfFile [chromosomes=[chrX, chr16, chr17], sampleCount=1, variantCount=7, phased=false, phasedAutodetect=false]"
                 ]
             ],
@@ -1021,7 +1049,7 @@
                 
             ]
         ],
-        "timestamp": "2026-09-10T16:49:45.818263063",
+        "timestamp": "2026-09-11T13:57:04.66337219",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -1800,9 +1828,15 @@
                 "snvs/family/FAM",
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_research.vcf.gz",
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_research.vcf.gz.tbi",
+                "snvs/family/FAM/precalled_input",
+                "snvs/family/FAM/precalled_input/FAM_concat.vcf.gz",
+                "snvs/family/FAM/precalled_input/FAM_concat.vcf.gz.tbi",
                 "snvs/family/FAM2",
                 "snvs/family/FAM2/FAM2_snvs_annotated_ranked_research.vcf.gz",
                 "snvs/family/FAM2/FAM2_snvs_annotated_ranked_research.vcf.gz.tbi",
+                "snvs/family/FAM2/precalled_input",
+                "snvs/family/FAM2/precalled_input/FAM2_concat.vcf.gz",
+                "snvs/family/FAM2/precalled_input/FAM2_concat.vcf.gz.tbi",
                 "snvs/sample",
                 "snvs/sample/HG002_ONT_A",
                 "snvs/sample/HG002_ONT_A/HG002_ONT_A_deepvariant_snvs.vcf.gz",
@@ -1822,6 +1856,9 @@
                 "svs/family/FAM/FAM_sniffles_svs.vcf.gz.tbi",
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz",
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz.tbi",
+                "svs/family/FAM/precalled_input",
+                "svs/family/FAM/precalled_input/FAM_svdb_merge_by_family.vcf.gz",
+                "svs/family/FAM/precalled_input/FAM_svdb_merge_by_family.vcf.gz.tbi",
                 "svs/family/FAM2",
                 "svs/family/FAM2/FAM2_debreak_svs.vcf.gz",
                 "svs/family/FAM2/FAM2_debreak_svs.vcf.gz.tbi",
@@ -1829,6 +1866,9 @@
                 "svs/family/FAM2/FAM2_sniffles_svs.vcf.gz.tbi",
                 "svs/family/FAM2/FAM2_svs_annotated_ranked_research.vcf.gz",
                 "svs/family/FAM2/FAM2_svs_annotated_ranked_research.vcf.gz.tbi",
+                "svs/family/FAM2/precalled_input",
+                "svs/family/FAM2/precalled_input/FAM2_svdb_merge_by_family.vcf.gz",
+                "svs/family/FAM2/precalled_input/FAM2_svdb_merge_by_family.vcf.gz.tbi",
                 "visualization_tracks",
                 "visualization_tracks/HG002_ONT_A",
                 "visualization_tracks/HG002_ONT_A/HG002_ONT_A_modkit_pileup_combined.bw",
@@ -2176,8 +2216,16 @@
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM, chr20], sampleCount=2, variantCount=135, phased=false, phasedAutodetect=false]"
                 ],
                 [
+                    "FAM_concat.vcf.gz",
+                    "VcfFile [chromosomes=[chrX, chr16, chr17, chr20], sampleCount=2, variantCount=127, phased=false, phasedAutodetect=false]"
+                ],
+                [
                     "FAM2_snvs_annotated_ranked_research.vcf.gz",
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM, chr20], sampleCount=1, variantCount=134, phased=false, phasedAutodetect=false]"
+                ],
+                [
+                    "FAM2_concat.vcf.gz",
+                    "VcfFile [chromosomes=[chrX, chr16, chr17, chr20], sampleCount=1, variantCount=126, phased=false, phasedAutodetect=false]"
                 ],
                 [
                     "HG002_ONT_A_deepvariant_snvs.vcf.gz",
@@ -2204,6 +2252,10 @@
                     "VcfFile [chromosomes=[chr16, chrM], sampleCount=2, variantCount=8, phased=false, phasedAutodetect=false]"
                 ],
                 [
+                    "FAM_svdb_merge_by_family.vcf.gz",
+                    "VcfFile [chromosomes=[chr16, chrM], sampleCount=2, variantCount=8, phased=false, phasedAutodetect=false]"
+                ],
+                [
                     "FAM2_debreak_svs.vcf.gz",
                     "VcfFile [chromosomes=[chr16], sampleCount=1, variantCount=3, phased=false, phasedAutodetect=false]"
                 ],
@@ -2214,13 +2266,17 @@
                 [
                     "FAM2_svs_annotated_ranked_research.vcf.gz",
                     "VcfFile [chromosomes=[chr16], sampleCount=1, variantCount=7, phased=false, phasedAutodetect=false]"
+                ],
+                [
+                    "FAM2_svdb_merge_by_family.vcf.gz",
+                    "VcfFile [chromosomes=[chr16], sampleCount=1, variantCount=7, phased=false, phasedAutodetect=false]"
                 ]
             ],
             [
                 
             ]
         ],
-        "timestamp": "2026-09-10T16:43:06.608570556",
+        "timestamp": "2026-09-11T13:50:17.662788992",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -3005,9 +3061,15 @@
                 "snvs/family/FAM",
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_research.vcf.gz",
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_research.vcf.gz.tbi",
+                "snvs/family/FAM/precalled_input",
+                "snvs/family/FAM/precalled_input/FAM_concat.vcf.gz",
+                "snvs/family/FAM/precalled_input/FAM_concat.vcf.gz.tbi",
                 "snvs/family/FAM2",
                 "snvs/family/FAM2/FAM2_snvs_annotated_ranked_research.vcf.gz",
                 "snvs/family/FAM2/FAM2_snvs_annotated_ranked_research.vcf.gz.tbi",
+                "snvs/family/FAM2/precalled_input",
+                "snvs/family/FAM2/precalled_input/FAM2_concat.vcf.gz",
+                "snvs/family/FAM2/precalled_input/FAM2_concat.vcf.gz.tbi",
                 "snvs/sample",
                 "snvs/sample/HG002_ONT_A",
                 "snvs/sample/HG002_ONT_A/HG002_ONT_A_deepvariant_snvs.vcf.gz",
@@ -3029,6 +3091,9 @@
                 "svs/family/FAM/FAM_sniffles_svs.vcf.gz.tbi",
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz",
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz.tbi",
+                "svs/family/FAM/precalled_input",
+                "svs/family/FAM/precalled_input/FAM_svdb_merge_by_family.vcf.gz",
+                "svs/family/FAM/precalled_input/FAM_svdb_merge_by_family.vcf.gz.tbi",
                 "svs/family/FAM2",
                 "svs/family/FAM2/FAM2_hificnv_svs.vcf.gz",
                 "svs/family/FAM2/FAM2_hificnv_svs.vcf.gz.tbi",
@@ -3038,6 +3103,9 @@
                 "svs/family/FAM2/FAM2_sniffles_svs.vcf.gz.tbi",
                 "svs/family/FAM2/FAM2_svs_annotated_ranked_research.vcf.gz",
                 "svs/family/FAM2/FAM2_svs_annotated_ranked_research.vcf.gz.tbi",
+                "svs/family/FAM2/precalled_input",
+                "svs/family/FAM2/precalled_input/FAM2_svdb_merge_by_family.vcf.gz",
+                "svs/family/FAM2/precalled_input/FAM2_svdb_merge_by_family.vcf.gz.tbi",
                 "visualization_tracks",
                 "visualization_tracks/HG002_ONT_A",
                 "visualization_tracks/HG002_ONT_A/HG002_ONT_A_hificnv.copynum.bedgraph",
@@ -3403,8 +3471,16 @@
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM, chr20], sampleCount=2, variantCount=135, phased=false, phasedAutodetect=false]"
                 ],
                 [
+                    "FAM_concat.vcf.gz",
+                    "VcfFile [chromosomes=[chrX, chr16, chr17, chr20], sampleCount=2, variantCount=127, phased=false, phasedAutodetect=false]"
+                ],
+                [
                     "FAM2_snvs_annotated_ranked_research.vcf.gz",
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM, chr20], sampleCount=1, variantCount=134, phased=false, phasedAutodetect=false]"
+                ],
+                [
+                    "FAM2_concat.vcf.gz",
+                    "VcfFile [chromosomes=[chrX, chr16, chr17, chr20], sampleCount=1, variantCount=126, phased=false, phasedAutodetect=false]"
                 ],
                 [
                     "HG002_ONT_A_deepvariant_snvs.vcf.gz",
@@ -3435,6 +3511,10 @@
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM], sampleCount=2, variantCount=14, phased=false, phasedAutodetect=false]"
                 ],
                 [
+                    "FAM_svdb_merge_by_family.vcf.gz",
+                    "VcfFile [chromosomes=[chrX, chr16, chr17, chrM], sampleCount=2, variantCount=14, phased=false, phasedAutodetect=false]"
+                ],
+                [
                     "FAM2_hificnv_svs.vcf.gz",
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM], sampleCount=1, variantCount=7, phased=false, phasedAutodetect=false]"
                 ],
@@ -3449,13 +3529,17 @@
                 [
                     "FAM2_svs_annotated_ranked_research.vcf.gz",
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM], sampleCount=1, variantCount=13, phased=false, phasedAutodetect=false]"
+                ],
+                [
+                    "FAM2_svdb_merge_by_family.vcf.gz",
+                    "VcfFile [chromosomes=[chrX, chr16, chr17, chrM], sampleCount=1, variantCount=13, phased=false, phasedAutodetect=false]"
                 ]
             ],
             [
                 
             ]
         ],
-        "timestamp": "2026-09-10T16:46:42.182905359",
+        "timestamp": "2026-09-11T13:53:51.656989873",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
