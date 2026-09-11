@@ -4,7 +4,7 @@ nextflow_pipeline {
     script "../main.nf"
     tag "PIPELINE"
 
-    test("samplesheet_precalled_ont | --precalled --premapped --preset ONT_R10 --phaser whatshap") {
+    test("samplesheet_precalled_ont | --precalled --preset ONT_R10 --phaser whatshap") {
         tag "samplesheet_precalled_ont"
 
         when {
@@ -31,7 +31,6 @@ nextflow_pipeline {
                 input                          = ss.absolutePath
                 outdir                         = "$outputDir"
                 preset                         = 'ONT_R10'
-                premapped                      = true
                 precalled                      = true
                 phaser                         = 'whatshap'
                 alignment_processes            = 1
