@@ -1,0 +1,54 @@
+nextflow_pipeline {
+
+    name "Test pipeline GENOMICMEDICINESWEDEN_NALLO — Stub tests for --precalled validation"
+    script "../main.nf"
+    tag "PIPELINE"
+    tag "pipeline_stub"
+    tag "stub_precalled_validation"
+    config "./nextflow.config"
+
+    test("--precalled with --skip_phasing fails with informative error") {
+        options "-stub"
+
+        when {
+            params {
+                pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/0a5412d2064120f06d87c327026e03bbf9e50835/'
+                input                        = "$projectDir/assets/samplesheet_multisample_bam.csv"
+                outdir                       = "$outputDir"
+                precalled                    = true
+                skip_phasing                 = true
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.failed },
+                { assert workflow.stdout.any { it.contains("--precalled cannot be combined with --skip_phasing") } }
+            )
+        }
+    }
+
+    test("--precalled without snv_vcf/sv_vcf columns in samplesheet fails with informative error") {
+        options "-stub"
+
+        when {
+            params {
+                pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/0a5412d2064120f06d87c327026e03bbf9e50835/'
+                input                        = "$projectDir/assets/samplesheet_multisample_bam.csv"
+                outdir                       = "$outputDir"
+                premapped                    = true
+                precalled                    = true
+                skip_genome_assembly         = true
+                skip_portello                = true
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.failed },
+                { assert workflow.stdout.any { it.contains("--precalled requires snv_vcf and snv_vcf_tbi columns") } }
+            )
+        }
+    }
+
+}
