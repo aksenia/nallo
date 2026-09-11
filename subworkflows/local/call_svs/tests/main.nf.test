@@ -96,7 +96,7 @@ nextflow_workflow {
                 { assert workflow.success },
                 { assert snapshot(
                     workflow.out.sv_calls
-                        .filter { meta, _vcf, _tbi -> !meta.skip_vep_prep }
+                        .findAll { meta, _vcf, _tbi -> !meta.skip_vep_prep }
                         .collect { meta, vcf, _tbi -> [
                             'sv_calls_raw:',
                             meta,
@@ -136,7 +136,7 @@ nextflow_workflow {
                 { assert workflow.success },
                 { assert snapshot(
                     workflow.out.sv_calls
-                        .filter { meta, _vcf, _tbi -> !meta.skip_vep_prep }
+                        .findAll { meta, _vcf, _tbi -> !meta.skip_vep_prep }
                         .collect { meta, vcf, _tbi -> [
                             'sv_calls_raw:',
                             meta,
@@ -176,7 +176,7 @@ nextflow_workflow {
                 { assert workflow.success },
                 { assert snapshot(
                     workflow.out.sv_calls
-                        .filter { meta, _vcf, _tbi -> !meta.skip_vep_prep }
+                        .findAll { meta, _vcf, _tbi -> !meta.skip_vep_prep }
                         .collect { meta, vcf, _tbi -> [
                             'sv_calls_raw:',
                             meta,
@@ -227,7 +227,7 @@ nextflow_workflow {
                 { assert workflow.success },
                 { assert snapshot(
                     workflow.out.sv_calls
-                        .filter { meta, _vcf, _tbi -> meta.skip_vep_prep }
+                        .findAll { meta, _vcf, _tbi -> meta.skip_vep_prep }
                         .collect { meta, vcf, tbi -> [
                             'sv_calls_indexed:',
                             meta,
@@ -282,7 +282,7 @@ nextflow_workflow {
                 { assert workflow.success },
                 { assert snapshot(
                     workflow.out.sv_calls
-                        .filter { meta, _vcf, _tbi -> meta.skip_vep_prep }
+                        .findAll { meta, _vcf, _tbi -> meta.skip_vep_prep }
                         .collect { meta, vcf, tbi -> [
                             'sv_calls_indexed:',
                             meta,
@@ -335,14 +335,14 @@ nextflow_workflow {
                 { assert workflow.success },
                 { assert snapshot(
                     workflow.out.sv_calls
-                        .filter { meta, _vcf, _tbi -> !meta.skip_vep_prep }
+                        .findAll { meta, _vcf, _tbi -> !meta.skip_vep_prep }
                         .collect { meta, vcf, _tbi -> [
                             'sv_calls_raw:',
                             meta,
                             [ file(vcf).name, path(vcf).vcf.summary, path(vcf).vcf.variantsMD5 ],
                         ] },
                     workflow.out.sv_calls
-                        .filter { meta, _vcf, _tbi -> meta.skip_vep_prep }
+                        .findAll { meta, _vcf, _tbi -> meta.skip_vep_prep }
                         .collect { meta, vcf, tbi -> [
                             'sv_calls_indexed:',
                             meta,
@@ -395,7 +395,7 @@ nextflow_workflow {
                 { assert workflow.success },
                 { assert snapshot(
                     workflow.out.sv_calls
-                        .filter { meta, _vcf, _tbi -> meta.skip_vep_prep }
+                        .findAll { meta, _vcf, _tbi -> meta.skip_vep_prep }
                         .collect { meta, vcf, tbi -> [
                             'sv_calls_indexed:',
                             meta,
@@ -448,14 +448,14 @@ nextflow_workflow {
                 { assert workflow.success },
                 { assert snapshot(
                     workflow.out.sv_calls
-                        .filter { meta, _vcf, _tbi -> !meta.skip_vep_prep }
+                        .findAll { meta, _vcf, _tbi -> !meta.skip_vep_prep }
                         .collect { meta, vcf, _tbi -> [
                             'sv_calls_raw:',
                             meta,
                             [ file(vcf).name, path(vcf).vcf.summary, path(vcf).vcf.variantsMD5 ],
                         ] },
                     workflow.out.sv_calls
-                        .filter { meta, _vcf, _tbi -> meta.skip_vep_prep }
+                        .findAll { meta, _vcf, _tbi -> meta.skip_vep_prep }
                         .collect { meta, vcf, tbi -> [
                             'sv_calls_indexed:',
                             meta,
@@ -507,14 +507,14 @@ nextflow_workflow {
                 { assert workflow.success },
                 { assert snapshot(
                     workflow.out.sv_calls
-                        .filter { meta, _vcf, _tbi -> !meta.skip_vep_prep }
+                        .findAll { meta, _vcf, _tbi -> !meta.skip_vep_prep }
                         .collect { meta, vcf, _tbi -> [
                             'sv_calls_raw:',
                             meta,
                             [ file(vcf).name, path(vcf).vcf.summary, path(vcf).vcf.variantsMD5 ],
                         ] },
                     workflow.out.sv_calls
-                        .filter { meta, _vcf, _tbi -> meta.skip_vep_prep }
+                        .findAll { meta, _vcf, _tbi -> meta.skip_vep_prep }
                         .collect { meta, vcf, tbi -> [
                             'sv_calls_indexed:',
                             meta,
