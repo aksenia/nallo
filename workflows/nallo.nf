@@ -657,15 +657,20 @@ workflow NALLO {
             val_create_sawfish_maf_track,
         )
 
-        // Normalise raw VCFs from simple callers (sniffles, sniffles1, severus, debreak),
-        // then sort and index; hificnv/sawfish already come with a TBI from their subworkflows.
-        VEP_PREP_SV(CALL_SVS.out.sv_calls_raw)
+        // Branch on meta.skip_vep_prep: callers that need VEP normalisation go through
+        // VEP_PREP_SV + BCFTOOLS_SORT; callers that are already sorted and indexed bypass both.
+        ch_sv_calls_branched = CALL_SVS.out.sv_calls.branch { meta, _vcf, _tbi ->
+            vep_prep: !meta.skip_vep_prep
+            no_vep_prep: meta.skip_vep_prep
+        }
+
+        VEP_PREP_SV(ch_sv_calls_branched.vep_prep.map { meta, vcf, _tbi -> [meta, vcf] })
 
         BCFTOOLS_SORT_SVS(VEP_PREP_SV.out.vcf)
 
         ch_sv_calls_all = BCFTOOLS_SORT_SVS.out.vcf
             .join(BCFTOOLS_SORT_SVS.out.tbi, failOnMismatch: true, failOnDuplicate: true)
-            .mix(CALL_SVS.out.sv_calls_indexed)
+            .mix(ch_sv_calls_branched.no_vep_prep)
 
         // Optionally filter to call regions
         ch_sv_calls_filtered = channel.empty()

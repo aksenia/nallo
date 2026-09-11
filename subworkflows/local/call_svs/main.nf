@@ -20,46 +20,44 @@ workflow CALL_SVS {
     create_sawfish_maf_track //    bool: Should we create a MAF track for Sawfish calls?
 
     main:
-    ch_sv_calls_raw = channel.empty()
-    ch_sv_calls_indexed = channel.empty()
+    ch_sv_calls = channel.empty()
 
     if (sv_callers_to_run.contains('sniffles')) {
         SNIFFLES_SV(ch_bam_bai, ch_fasta, ch_tandem_repeats)
-        ch_sv_calls_raw = ch_sv_calls_raw.mix(SNIFFLES_SV.out.vcf)
+        ch_sv_calls = ch_sv_calls.mix(SNIFFLES_SV.out.vcf.map { meta, vcf -> [meta, vcf, []] })
     }
 
     if (sv_callers_to_run.contains('sniffles1')) {
         SNIFFLES1_SV(ch_bam_bai)
-        ch_sv_calls_raw = ch_sv_calls_raw.mix(SNIFFLES1_SV.out.vcf)
+        ch_sv_calls = ch_sv_calls.mix(SNIFFLES1_SV.out.vcf.map { meta, vcf -> [meta, vcf, []] })
     }
 
     if (sv_callers_to_run.contains('severus')) {
         SEVERUS_SV(ch_bam_bai, ch_tandem_repeats)
-        ch_sv_calls_raw = ch_sv_calls_raw.mix(SEVERUS_SV.out.vcf)
+        ch_sv_calls = ch_sv_calls.mix(SEVERUS_SV.out.vcf.map { meta, vcf -> [meta, vcf, []] })
     }
 
     if (sv_callers_to_run.contains('debreak')) {
         DEBREAK_SV(ch_bam_bai, ch_fasta)
-        ch_sv_calls_raw = ch_sv_calls_raw.mix(DEBREAK_SV.out.vcf)
+        ch_sv_calls = ch_sv_calls.mix(DEBREAK_SV.out.vcf.map { meta, vcf -> [meta, vcf, []] })
     }
 
     if (sv_callers_to_run.contains('hificnv')) {
         HIFICNV_SV(ch_bam_bai, ch_snvs, ch_fasta, ch_expected_xy_bed, ch_expected_xx_bed, ch_exclude_bed, create_hificnv_maf_track)
-        ch_sv_calls_indexed = ch_sv_calls_indexed.mix(
+        ch_sv_calls = ch_sv_calls.mix(
             HIFICNV_SV.out.vcf.join(HIFICNV_SV.out.tbi, failOnMismatch: true, failOnDuplicate: true)
         )
     }
 
     if (sv_callers_to_run.contains('sawfish')) {
         SAWFISH_SV(ch_bam_bai, ch_snvs, ch_fasta, ch_expected_xy_bed, ch_expected_xx_bed, ch_exclude_bed, create_sawfish_maf_track, force_sawfish_joint_call_single_samples)
-        ch_sv_calls_indexed = ch_sv_calls_indexed.mix(
+        ch_sv_calls = ch_sv_calls.mix(
             SAWFISH_SV.out.vcf.join(SAWFISH_SV.out.tbi, failOnMismatch: true, failOnDuplicate: true)
         )
     }
 
     emit:
-    sv_calls_raw                       = ch_sv_calls_raw // channel: [ val(meta), path(vcf) ]
-    sv_calls_indexed                   = ch_sv_calls_indexed // channel: [ val(meta), path(vcf), path(tbi) ]
+    sv_calls                           = ch_sv_calls // channel: [ val(meta), path(vcf), path(tbi) ] — tbi is [] for callers with skip_vep_prep: false
     hificnv_depth                      = sv_callers_to_run.contains('hificnv') ? HIFICNV_SV.out.depth : channel.empty() // channel: [ val(meta), path(bw) ]
     hificnv_copynum                    = sv_callers_to_run.contains('hificnv') ? HIFICNV_SV.out.copynum : channel.empty() // channel: [ val(meta), path(bedgraph) ]
     hificnv_maf                        = sv_callers_to_run.contains('hificnv') ? HIFICNV_SV.out.maf : channel.empty() // channel: [ val(meta), path(bw) ]
