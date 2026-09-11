@@ -71,6 +71,8 @@ nextflow_pipeline {
                 premapped                    = true
                 precalled                    = true
                 skip_phasing                 = true
+                skip_repeat_calling          = true
+                skip_repeat_annotation       = true
                 skip_genome_assembly         = true
                 skip_portello                = true
             }
