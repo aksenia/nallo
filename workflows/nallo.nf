@@ -753,13 +753,17 @@ workflow NALLO {
         ch_phasing_snv_vcf = channel.empty()
         ch_phasing_snv_tbi = channel.empty()
 
-        // vcf entry families have whole-genome VCFs; tag with entry_point so add_mito check can exclude them
-        ch_vcf_entry_phasing_vcf = family_snv_vcf
-            .filter { meta, _vcf -> !meta.containsKey('genome') }
-            .map { meta, vcf -> [meta + [entry_point: 'vcf'], vcf] }
-        ch_vcf_entry_phasing_tbi = family_snv_index
-            .filter { meta, _tbi -> !meta.containsKey('genome') }
-            .map { meta, tbi -> [meta + [entry_point: 'vcf'], tbi] }
+        // Collect vcf entry family IDs so add_mito can exclude them after phasing strips meta fields
+        ch_vcf_entry_family_ids = ch_samplesheet
+            .filter { meta, _reads -> meta.entry_point == 'vcf' }
+            .map { meta, _reads -> meta.family_id }
+            .unique()
+            .collect()
+
+        // vcf entry families provide whole-genome VCFs directly; pass with plain family meta [id: FAM]
+        // so SPLIT_MULTISAMPLE_VCF can match against ch_family_to_samples using .combine(by: 0)
+        ch_vcf_entry_phasing_vcf = family_snv_vcf.filter { meta, _vcf -> !meta.containsKey('genome') }
+        ch_vcf_entry_phasing_tbi = family_snv_index.filter { meta, _tbi -> !meta.containsKey('genome') }
 
         /*
          * The VCFs are split by calling regions but we need whole-genome VCFs for phasing, we first group by family and then concatenate the VCFs of the same family together.
@@ -834,8 +838,9 @@ workflow NALLO {
         ch_snv_vcf_tbi_nuclear_for_annotation = BCFTOOLS_VIEW_PHASING.out.vcf
             .join(BCFTOOLS_VIEW_PHASING.out.tbi, failOnMismatch: true, failOnDuplicate: true)
             .combine(ch_mito_nonempty)
-            .map { meta, vcf, tbi, mito_nonempty ->
-                def add_mito = !val_skip_mitochondrial_calling && mito_nonempty && meta.entry_point != 'vcf'
+            .combine(ch_vcf_entry_family_ids)
+            .map { meta, vcf, tbi, mito_nonempty, vcf_entry_ids ->
+                def add_mito = !val_skip_mitochondrial_calling && mito_nonempty && !(meta.family_id in vcf_entry_ids)
                 [meta + [num_intervals: add_mito ? meta.num_intervals + 1 : meta.num_intervals], vcf, tbi]
             }
 
