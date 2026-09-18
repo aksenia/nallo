@@ -15,10 +15,18 @@
                 "meta": ["id"]
             },
             "file": {
-                "format": "file-path",
-                "type": "string",
-                "pattern": "^\\S+\\.(f(ast)?q\\.gz|bam)$",
-                "errorMessage": "FastQ or BAM file must be provided, cannot contain spaces and must have extension '.fq.gz', '.fastq.gz' or '.bam'"
+                "anyOf": [
+                    {
+                        "type": "string",
+                        "format": "file-path",
+                        "pattern": "^\\S+\\.(f(ast)?q\\.gz|bam)$"
+                    },
+                    {
+                        "type": "string",
+                        "enum": ["0"]
+                    }
+                ],
+                "errorMessage": "FastQ or BAM file must have extension '.fq.gz', '.fastq.gz' or '.bam', or use '0' when providing an aligned BAM via the aligned_bam column"
             },
             "family_id": {
                 "type": "string",
@@ -71,6 +79,81 @@
                 "pattern": "^\\S+$",
                 "errorMessage": "Project name must be provided and cannot contain spaces, needs to be the same for all samples",
                 "meta": ["project"]
+            },
+            "aligned_bam": {
+                "anyOf": [
+                    {
+                        "type": "string",
+                        "format": "file-path",
+                        "pattern": "^\\S+\\.bam$"
+                    },
+                    {
+                        "type": "string",
+                        "enum": ["0"]
+                    }
+                ],
+                "errorMessage": "Aligned BAM must have extension '.bam', or use '0' if not providing an aligned BAM",
+                "meta": ["aligned_bam"]
+            },
+            "snv_vcf": {
+                "anyOf": [
+                    {
+                        "type": "string",
+                        "format": "file-path",
+                        "pattern": "^\\S+\\.vcf\\.gz$"
+                    },
+                    {
+                        "type": "string",
+                        "enum": ["0"]
+                    }
+                ],
+                "errorMessage": "Pre-called SNV VCF must be bgzipped (.vcf.gz), or use '0' if not providing pre-called SNVs",
+                "meta": ["snv_vcf"]
+            },
+            "snv_vcf_tbi": {
+                "anyOf": [
+                    {
+                        "type": "string",
+                        "format": "file-path",
+                        "pattern": "^\\S+\\.vcf\\.gz\\.tbi$"
+                    },
+                    {
+                        "type": "string",
+                        "enum": ["0"]
+                    }
+                ],
+                "errorMessage": "Index for pre-called SNV VCF must have extension '.vcf.gz.tbi', or use '0' if not providing pre-called SNVs",
+                "meta": ["snv_vcf_tbi"]
+            },
+            "sv_vcf": {
+                "anyOf": [
+                    {
+                        "type": "string",
+                        "format": "file-path",
+                        "pattern": "^\\S+\\.vcf\\.gz$"
+                    },
+                    {
+                        "type": "string",
+                        "enum": ["0"]
+                    }
+                ],
+                "errorMessage": "Pre-called SV VCF must be bgzipped (.vcf.gz), or use '0' if not providing pre-called SVs",
+                "meta": ["sv_vcf"]
+            },
+            "sv_vcf_tbi": {
+                "anyOf": [
+                    {
+                        "type": "string",
+                        "format": "file-path",
+                        "pattern": "^\\S+\\.vcf\\.gz\\.tbi$"
+                    },
+                    {
+                        "type": "string",
+                        "enum": ["0"]
+                    }
+                ],
+                "errorMessage": "Index for pre-called SV VCF must have extension '.vcf.gz.tbi', or use '0' if not providing pre-called SVs",
+                "meta": ["sv_vcf_tbi"]
             }
         },
         "required": ["sample", "file", "family_id", "paternal_id", "maternal_id", "sex", "phenotype", "project"]
