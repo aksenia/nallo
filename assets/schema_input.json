@@ -24,6 +24,10 @@
                     {
                         "type": "string",
                         "enum": ["0"]
+                    },
+                    {
+                        "type": "integer",
+                        "enum": [0]
                     }
                 ],
                 "errorMessage": "FastQ or BAM file must have extension '.fq.gz', '.fastq.gz' or '.bam', or use '0' when providing an aligned BAM via the aligned_bam column"
@@ -90,6 +94,10 @@
                     {
                         "type": "string",
                         "enum": ["0"]
+                    },
+                    {
+                        "type": "integer",
+                        "enum": [0]
                     }
                 ],
                 "errorMessage": "Aligned BAM must have extension '.bam', or use '0' if not providing an aligned BAM",
@@ -105,6 +113,10 @@
                     {
                         "type": "string",
                         "enum": ["0"]
+                    },
+                    {
+                        "type": "integer",
+                        "enum": [0]
                     }
                 ],
                 "errorMessage": "Pre-called SNV VCF must be bgzipped (.vcf.gz), or use '0' if not providing pre-called SNVs",
@@ -120,6 +132,10 @@
                     {
                         "type": "string",
                         "enum": ["0"]
+                    },
+                    {
+                        "type": "integer",
+                        "enum": [0]
                     }
                 ],
                 "errorMessage": "Pre-called SV VCF must be bgzipped (.vcf.gz), or use '0' if not providing pre-called SVs",
