@@ -322,7 +322,7 @@ workflow NALLO {
             ALIGN.out.bam.join(ALIGN.out.index, failOnMismatch: true, failOnDuplicate: true).combine(ch_reads_grouping_key).filter { bam_meta, _bam, _bai, group_id, _group_size ->
                 bam_meta.id == group_id
             }.map { bam_meta, bam, bai, _group_id, group_size ->
-                tuple(groupKey(bam_meta - bam_meta.subMap('file'), group_size), bam, bai)
+                tuple(groupKey(bam_meta - bam_meta.subMap('file', 'aligned_bam', 'snv_vcf', 'snv_vcf_tbi', 'sv_vcf', 'sv_vcf_tbi'), group_size), bam, bai)
             }.groupTuple().map { key, bams, bais -> tuple(key.getGroupTarget(), bams, bais) }.map { meta, bams, bais ->
                 // Keep BAM and BAI pairing while enforcing deterministic order.
                 def bam_bai_pairs = [bams, bais]
@@ -334,10 +334,14 @@ workflow NALLO {
             }
         )
 
-        // For bam/vcf entry points, use pre-aligned BAM from the aligned_bam column
-        // SAMTOOLS_MERGE expects indexes but is happy to merge without them
+        // For bam/vcf entry points, use pre-aligned BAM from the aligned_bam column.
+        // Strip per-row routing fields from meta before groupTuple so multi-BAM samples
+        // with different aligned_bam values still group under the same sample meta.
+        // SAMTOOLS_MERGE expects indexes but is happy to merge without them.
         ch_aligned_for_merge = ch_aligned_for_merge.mix(
-            ch_samplesheet.filter { meta, _reads -> meta.entry_point in ['bam', 'vcf'] }.map { meta, _reads -> [meta, meta.aligned_bam] }.groupTuple().map { meta, bams -> [meta, bams, []] }
+            ch_samplesheet.filter { meta, _reads -> meta.entry_point in ['bam', 'vcf'] }.map { meta, _reads ->
+                [meta - meta.subMap('aligned_bam', 'snv_vcf', 'snv_vcf_tbi', 'sv_vcf', 'sv_vcf_tbi'), meta.aligned_bam]
+            }.groupTuple().map { meta, bams -> [meta, bams, []] }
         )
 
         SAMTOOLS_MERGE(

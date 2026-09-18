@@ -1,5 +1,5 @@
 {
-    "samplesheet_premapped | --premapped": {
+    "samplesheet_premapped | aligned_bam column": {
         "content": [
             362,
             {
