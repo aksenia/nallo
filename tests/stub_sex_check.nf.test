@@ -13,7 +13,7 @@ nextflow_pipeline {
         when {
             params {
                 pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/0a5412d2064120f06d87c327026e03bbf9e50835/'
-                input                        = "$projectDir/assets/samplesheet.csv"
+                input                        = "$projectDir/assets/samplesheet_fastq.csv"
                 outdir                       = "$outputDir"
                 sv_callers                   = "severus,hificnv"
                 sv_callers_to_run            = "severus,hificnv,sniffles"
@@ -66,7 +66,7 @@ nextflow_pipeline {
         when {
             params {
                 pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/0a5412d2064120f06d87c327026e03bbf9e50835/'
-                input                        = "$projectDir/assets/samplesheet_multisample_bam.csv"
+                input                        = "$projectDir/assets/samplesheet_multisample_ubam.csv"
                 outdir                       = "$outputDir"
                 sv_callers                   = "severus,hificnv"
                 sv_callers_to_run            = "severus,hificnv,sniffles"

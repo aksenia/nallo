@@ -1,5 +1,5 @@
 {
-    "samplesheet_multisample_ont_bam | --preset ONT_R10 --sv_callers sniffles1 --phaser whatshap --alignment_processes 1 --snv_calling_processes 1 --publish_unannotated_family_svs": {
+    "samplesheet_multisample_ont_ubam | --preset ONT_R10 --sv_callers sniffles1 --phaser whatshap --alignment_processes 1 --snv_calling_processes 1 --publish_unannotated_family_svs": {
         "content": [
             239,
             {
@@ -1027,7 +1027,7 @@
             "nextflow": "26.04.6"
         }
     },
-    "samplesheet_multisample_ont_bam | --preset ONT_R10 --phaser whatshap --alignment_processes 1 --snv_calling_processes 1 --sv_callers sniffles,debreak --publish_unannotated_family_svs": {
+    "samplesheet_multisample_ont_ubam | --preset ONT_R10 --phaser whatshap --alignment_processes 1 --snv_calling_processes 1 --sv_callers sniffles,debreak --publish_unannotated_family_svs": {
         "content": [
             328,
             {
@@ -2226,7 +2226,7 @@
             "nextflow": "26.04.6"
         }
     },
-    "samplesheet_multisample_ont_bam | --preset ONT_R10 --phaser whatshap --alignment_processes 1 --snv_calling_processes 1 --sv_caller sniffles --publish_unannotated_family_svs": {
+    "samplesheet_multisample_ont_ubam | --preset ONT_R10 --phaser whatshap --alignment_processes 1 --snv_calling_processes 1 --sv_caller sniffles --publish_unannotated_family_svs": {
         "content": [
             341,
             {

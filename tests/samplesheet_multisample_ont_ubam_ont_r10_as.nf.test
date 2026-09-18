@@ -4,17 +4,22 @@ nextflow_pipeline {
     script "../main.nf"
     tag "PIPELINE"
 
-    test("samplesheet_premapped | aligned_bam column") {
-        tag "samplesheet_premapped"
+    test("samplesheet_multisample_ont_ubam | --preset ONT_R10_AS --target_regions test_data.bed --phaser whatshap --alignment_processes 1 --snv_calling_processes 1") {
+        tag "samplesheet_multisample_ont_ubam_ont_r10_as"
 
         when {
             params {
                 pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/0a5412d2064120f06d87c327026e03bbf9e50835/'
-                input                        = "$projectDir/assets/samplesheet_premapped.csv"
+                input                        = "$projectDir/assets/samplesheet_multisample_ont_ubam.csv"
                 outdir                       = "$outputDir"
-                paraphrase_output_format     = 'json'
-                skip_genome_assembly         = true
-                skip_portello                = true
+                preset                       = "ONT_R10_AS"
+                target_regions               = params.pipelines_testdata_base_path + 'reference/test_data.bed'
+                alignment_processes          = 1
+                snv_calling_processes        = 1
+                phaser                       = "whatshap"
+                publish_unannotated_family_svs = true
+                filter_variants_hgnc_ids     = null
+                skip_methylation_annotation  = true
             }
         }
 
@@ -38,6 +43,8 @@ nextflow_pipeline {
             assertAll(
                 { assert workflow.success },
                 { assert !versions.containsKey('SPLITUBAM') },
+                { assert !versions.containsKey('MITORSAW_HAPLOTYPE') },  // skip_mitochondrial_calling=true in ONT_R10_AS
+                { assert versions.containsKey('SAMTOOLS_VIEW') },         // on-target read filtering ran
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),

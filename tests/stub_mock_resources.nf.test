@@ -13,7 +13,7 @@ nextflow_pipeline {
         when {
             params {
                 pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/0a5412d2064120f06d87c327026e03bbf9e50835/'
-                input                        = "$projectDir/assets/samplesheet.csv"
+                input                        = "$projectDir/assets/samplesheet_fastq.csv"
                 outdir                       = "$outputDir"
                 // Mock inputs for CADD
                 cadd_resources               = "$projectDir/assets"
@@ -61,7 +61,7 @@ nextflow_pipeline {
         when {
             params {
                 pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/0a5412d2064120f06d87c327026e03bbf9e50835/'
-                input                        = "$projectDir/assets/samplesheet.csv"
+                input                        = "$projectDir/assets/samplesheet_fastq.csv"
                 outdir                       = "$outputDir"
                 // Mock inputs for VEP
                 vep_cache                    = "$projectDir/assets"
@@ -109,7 +109,7 @@ nextflow_pipeline {
         when {
             params {
                 pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/0a5412d2064120f06d87c327026e03bbf9e50835/'
-                input                        = "$projectDir/assets/samplesheet.csv"
+                input                        = "$projectDir/assets/samplesheet_fastq.csv"
                 outdir                       = "$outputDir"
                 snv_caller                   = "sentieon"
                 snv_calling_processes        = 1

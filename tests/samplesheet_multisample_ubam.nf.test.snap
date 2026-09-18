@@ -1,5 +1,5 @@
 {
-    "samplesheet_multisample_bam": {
+    "samplesheet_multisample_ubam": {
         "content": [
             430,
             {
@@ -1357,7 +1357,7 @@
             "nextflow": "26.04.6"
         }
     },
-    "samplesheet_multisample_bam | --sv_callers sniffles1,debreak --phaser whatshap": {
+    "samplesheet_multisample_ubam | --sv_callers sniffles1,debreak --phaser whatshap": {
         "content": [
             395,
             {
