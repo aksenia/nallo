@@ -159,7 +159,6 @@ workflow NALLO {
     val_plot_chromograph_autozygosity
     val_plot_chromograph_coverage
     val_pre_vep_snv_filter_expression
-    val_premapped
     val_read_aligner
     val_sentieon_tech
     val_skip_alignment
@@ -227,22 +226,26 @@ workflow NALLO {
      */
     if (!val_skip_alignment) {
 
-        if (!val_premapped) {
+        ch_for_alignment = ch_samplesheet.filter { meta, _reads -> meta.entry_point in ['fastq', 'ubam'] }
 
-            CONVERT_INPUT_FASTQS(
-                ch_samplesheet,
-                false,
-                true,
-            )
+        CONVERT_INPUT_FASTQS(
+            ch_for_alignment,
+            false,
+            true,
+        )
 
-            if (val_alignment_processes > 1) {
-                SPLITUBAM(CONVERT_INPUT_FASTQS.out.bam)
-                ch_unmapped = SPLITUBAM.out.bam.transpose()
-            }
-            else {
-                ch_unmapped = CONVERT_INPUT_FASTQS.out.bam
-            }
+        if (val_alignment_processes > 1) {
+            SPLITUBAM(CONVERT_INPUT_FASTQS.out.bam)
+            ch_unmapped = SPLITUBAM.out.bam.transpose()
         }
+        else {
+            ch_unmapped = CONVERT_INPUT_FASTQS.out.bam
+        }
+    }
+
+    // For genome assembly: map bam/vcf entry_point samples to their aligned_bam column
+    ch_samplesheet_for_assembly = ch_samplesheet.map { meta, reads ->
+        meta.entry_point in ['bam', 'vcf'] ? [meta, meta.aligned_bam] : [meta, reads]
     }
 
     //
@@ -264,7 +267,7 @@ workflow NALLO {
         // Since starting with FASTQs is a rare case, no splitting of FASTQs alone just for the assembly is implemented
 
         CONVERT_INPUT_BAMS(
-            val_skip_alignment || val_premapped || (val_alignment_processes == 1) ? ch_samplesheet : SPLITUBAM.out.bam.transpose(),
+            val_skip_alignment || (val_alignment_processes == 1) ? ch_samplesheet_for_assembly : SPLITUBAM.out.bam.transpose(),
             true,
             false,
         )
@@ -293,56 +296,49 @@ workflow NALLO {
 
     if (!val_skip_alignment) {
 
-        if (!val_premapped) {
-            /*
-             * Create a grouping key per sample that records the number of split files,
-             * allowing downstream merging to trigger as soon as all alignments of a sample are ready.
-             */
-            ch_reads_grouping_key = ch_unmapped
-                .groupTuple()
-                .map { meta, files -> tuple(meta.id, files.size()) }
+        ch_aligned_for_merge = channel.empty()
 
-            // Add original file name to meta to join correct alignments and indexes
-            ch_align_in = ch_unmapped.map { meta, bam -> tuple(meta + [file: bam.name], bam) }
+        /*
+         * Create a grouping key per sample that records the number of split files,
+         * allowing downstream merging to trigger as soon as all alignments of a sample are ready.
+         */
+        ch_reads_grouping_key = ch_unmapped
+            .groupTuple()
+            .map { meta, files -> tuple(meta.id, files.size()) }
 
-            // If portello is not skipped, we need to align the reads to the concatenated haplotypes from the assembly,
-            // otherwise we can align to the reference genome.
-            ALIGN(
-                ch_align_in,
-                !val_skip_portello ? GENOME_ASSEMBLY.out.concatenated_haplotypes : ch_fasta,
-                val_read_aligner,
-                val_skip_portello,
-            )
+        // Add original file name to meta to join correct alignments and indexes
+        ch_align_in = ch_unmapped.map { meta, bam -> tuple(meta + [file: bam.name], bam) }
 
-            ch_aligned_for_merge = ALIGN.out.bam
-                .join(ALIGN.out.index, failOnMismatch: true, failOnDuplicate: true)
-                .combine(ch_reads_grouping_key)
-                .filter { bam_meta, _bam, _bai, group_id, _group_size ->
-                    bam_meta.id == group_id
-                }
-                .map { bam_meta, bam, bai, _group_id, group_size ->
-                    tuple(groupKey(bam_meta - bam_meta.subMap('file'), group_size), bam, bai)
-                }
-                .groupTuple()
-                .map { key, bams, bais -> tuple(key.getGroupTarget(), bams, bais) }
-                .map { meta, bams, bais ->
-                    // Keep BAM and BAI pairing while enforcing deterministic order.
-                    def bam_bai_pairs = [bams, bais]
-                        .transpose()
-                        .sort { left, right ->
-                            left[0].getName() <=> right[0].getName()
-                        }
-                    [meta, bam_bai_pairs.collect { pair -> pair[0] }, bam_bai_pairs.collect { pair -> pair[1] }]
-                }
-        }
-        else {
+        // If portello is not skipped, we need to align the reads to the concatenated haplotypes from the assembly,
+        // otherwise we can align to the reference genome.
+        ALIGN(
+            ch_align_in,
+            !val_skip_portello ? GENOME_ASSEMBLY.out.concatenated_haplotypes : ch_fasta,
+            val_read_aligner,
+            val_skip_portello,
+        )
 
-            // If bams are premapped, just merge them (ONT machines output several BAMs per sample)
-            // SAMTOOLS_MERGE expects indexes in the input but is happy to merge them if the indexes are missing
-            ch_aligned_for_merge = ch_samplesheet
-                .groupTuple()
-                .map { meta, reads -> [meta, reads, []] }
-        }
+        ch_aligned_for_merge = ch_aligned_for_merge.mix(
+            ALIGN.out.bam.join(ALIGN.out.index, failOnMismatch: true, failOnDuplicate: true).combine(ch_reads_grouping_key).filter { bam_meta, _bam, _bai, group_id, _group_size ->
+                bam_meta.id == group_id
+            }.map { bam_meta, bam, bai, _group_id, group_size ->
+                tuple(groupKey(bam_meta - bam_meta.subMap('file'), group_size), bam, bai)
+            }.groupTuple().map { key, bams, bais -> tuple(key.getGroupTarget(), bams, bais) }.map { meta, bams, bais ->
+                // Keep BAM and BAI pairing while enforcing deterministic order.
+                def bam_bai_pairs = [bams, bais]
+                    .transpose()
+                    .sort { left, right ->
+                        left[0].getName() <=> right[0].getName()
+                    }
+                [meta, bam_bai_pairs.collect { pair -> pair[0] }, bam_bai_pairs.collect { pair -> pair[1] }]
+            }
+        )
+
+        // For bam/vcf entry points, use pre-aligned BAM from the aligned_bam column
+        // SAMTOOLS_MERGE expects indexes but is happy to merge without them
+        ch_aligned_for_merge = ch_aligned_for_merge.mix(
+            ch_samplesheet.filter { meta, _reads -> meta.entry_point in ['bam', 'vcf'] }.map { meta, _reads -> [meta, meta.aligned_bam] }.groupTuple().map { meta, bams -> [meta, bams, []] }
+        )
 
         SAMTOOLS_MERGE(
             ch_aligned_for_merge,
@@ -1354,10 +1350,14 @@ workflow NALLO {
     somalier_relate_samples             = val_skip_sex_check ? channel.empty() : BAM_INFER_SEX.out.somalier_samples // channel: [ val(meta), path(samples.tsv) ]
     snvs_sample_tbi                     = val_skip_snv_calling ? channel.empty() : VCF_CONCAT_NORM_VARIANTS.out.index // channel: [ val(meta), path(tbi) ]
     snvs_sample_vcf                     = val_skip_snv_calling ? channel.empty() : VCF_CONCAT_NORM_VARIANTS.out.vcf // channel: [ val(meta), path(vcf) ]
+    snvs_family_joint_tbi               = (val_skip_snv_calling || val_skip_phasing) ? channel.empty() : BCFTOOLS_CONCAT_PHASING.out.tbi // channel: [ val(meta), path(tbi) ]
+    snvs_family_joint_vcf               = (val_skip_snv_calling || val_skip_phasing) ? channel.empty() : BCFTOOLS_CONCAT_PHASING.out.vcf // channel: [ val(meta), path(vcf) ]
     snvs_family_tbi                     = val_skip_snv_calling ? channel.empty() : CONCAT_SORT_RANKED_SNVS.out.index // channel: [ val(meta), path(tbi) ]
     snvs_family_vcf                     = val_skip_snv_calling ? channel.empty() : CONCAT_SORT_RANKED_SNVS.out.vcf // channel: [ val(meta), path(vcf) ]
     svs_per_family_and_caller_tbi       = val_skip_sv_calling ? channel.empty() : MERGE_SVS.out.family_caller_tbi // channel: [ val(meta), path(tbi) ]
     svs_per_family_and_caller_vcf       = val_skip_sv_calling ? channel.empty() : MERGE_SVS.out.family_caller_vcf // channel: [ val(meta), path(vcf) ]
+    svs_per_family_merged_tbi           = val_skip_sv_calling ? channel.empty() : MERGE_SVS.out.family_tbi // channel: [ val(meta), path(tbi) ]
+    svs_per_family_merged_vcf           = val_skip_sv_calling ? channel.empty() : MERGE_SVS.out.family_vcf // channel: [ val(meta), path(vcf) ]
     svs_per_family_tbi                  = val_skip_sv_calling ? channel.empty() : ch_collect_tbi // channel: [ val(meta), path(tbi) ]
     svs_per_family_vcf                  = val_skip_sv_calling ? channel.empty() : ch_collect_svs // channel: [ val(meta), path(vcf.gz) ]
 }
