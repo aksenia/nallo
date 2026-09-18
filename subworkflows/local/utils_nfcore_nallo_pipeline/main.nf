@@ -386,7 +386,6 @@ workflow PIPELINE_INITIALISATION {
 
     emit:
     samplesheet = ch_samplesheet
-    entry_point = ch_samplesheet.map { meta, _reads -> meta.entry_point }.first()
 }
 
 /*
@@ -803,7 +802,7 @@ def validateEntryPointConsistency(input) {
             def unique_eps = entry_points.unique()
             if (unique_eps.size() > 1) {
                 def detail = [entry_points, sample_ids].transpose().collect { ep, sid -> "${sid}=${ep}" }.join(', ')
-                error("Error: All samples in family '${family_id}' must use the same entry point (file, aligned_bam, or precalled VCF columns). Found: ${detail}")
+                error("Error: All samples in family '${family_id}' must use the same entry point (file, aligned_bam, or vcf entry_point columns). Found: ${detail}")
             }
         }
 }
