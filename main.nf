@@ -105,7 +105,6 @@ workflow GENOMICMEDICINESWEDEN_NALLO {
     val_plot_chromograph_autozygosity
     val_plot_chromograph_coverage
     val_pre_vep_snv_filter_expression
-    val_premapped
     val_read_aligner
     val_sentieon_tech
     val_skip_alignment
@@ -221,7 +220,6 @@ workflow GENOMICMEDICINESWEDEN_NALLO {
         val_plot_chromograph_autozygosity,
         val_plot_chromograph_coverage,
         val_pre_vep_snv_filter_expression,
-        val_premapped,
         val_read_aligner,
         val_sentieon_tech,
         val_skip_alignment,
@@ -413,7 +411,6 @@ workflow {
         params.mitochondrial_caller,
         params.par_regions,
         params.phaser,
-        params.premapped,
         params.preset,
         params.sambamba_regions,
         params.skip_alignment,
@@ -534,7 +531,6 @@ workflow {
         params.plot_chromograph_autozygosity,
         params.plot_chromograph_coverage,
         params.pre_vep_snv_filter_expression,
-        params.premapped,
         params.read_aligner,
         params.sentieon_tech,
         params.skip_alignment,
