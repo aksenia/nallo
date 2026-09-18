@@ -85,6 +85,7 @@ workflow GENOMICMEDICINESWEDEN_NALLO {
     val_create_hificnv_maf_track
     val_create_sawfish_maf_track
     val_echtvar_snv_databases
+    val_entry_point
     val_fasta
     val_filter_snvs_expression
     val_filter_svs_expression
@@ -201,6 +202,7 @@ workflow GENOMICMEDICINESWEDEN_NALLO {
         val_create_hificnv_maf_track,
         val_create_sawfish_maf_track,
         val_echtvar_snv_databases,
+        val_entry_point,
         val_fasta,
         val_filter_snvs_expression,
         val_filter_svs_expression,
@@ -515,6 +517,7 @@ workflow {
         params.create_hificnv_maf_track,
         params.create_sawfish_maf_track,
         params.echtvar_snv_databases,
+        PIPELINE_INITIALISATION.out.entry_point,
         params.fasta,
         params.filter_snvs_expression,
         params.filter_svs_expression,

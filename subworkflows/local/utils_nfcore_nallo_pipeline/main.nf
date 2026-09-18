@@ -375,8 +375,18 @@ workflow PIPELINE_INITIALISATION {
             }
     }
 
+    // vcf entry_point (pre-called SNV/SV VCFs) requires phasing to integrate VCFs into the annotation pipeline
+    if (val_skip_phasing) {
+        ch_samplesheet
+            .filter { meta, _reads -> meta.entry_point == 'vcf' }
+            .map { meta, _reads ->
+                error("Sample '${meta.id}' uses vcf entry_point (pre-called SNV/SV VCFs) but --skip_phasing is set. Phasing is required to integrate pre-called VCFs.")
+            }
+    }
+
     emit:
     samplesheet = ch_samplesheet
+    entry_point = ch_samplesheet.map { meta, _reads -> meta.entry_point }.first()
 }
 
 /*
