@@ -311,11 +311,11 @@ workflow PIPELINE_INITIALISATION {
             // Derive entry_point from which column carries the input file (not from extension:
             // uBAM and aligned BAM share ".bam"; column position is the only signal).
             def ab = meta.aligned_bam
-            def sv = meta.snv_vcf
-            def sv2 = meta.sv_vcf
+            def snv = meta.snv_vcf
+            def sv = meta.sv_vcf
             def entry_point
             if (ab && ab != "0") {
-                entry_point = (sv && sv != "0" && sv2 && sv2 != "0") ? "vcf" : "bam"
+                entry_point = (snv && snv != "0" && sv && sv != "0") ? "vcf" : "bam"
             }
             else if (reads.name =~ /\.bam$/) {
                 entry_point = "ubam"
@@ -365,6 +365,15 @@ workflow PIPELINE_INITIALISATION {
 
     // Check that the parents are present in the samplesheet
     validateParentExistsInFamily(ch_samplesheet)
+
+    // FASTQ input lacks MM/ML base-modification tags — methylation calling would silently produce garbage
+    if (!val_skip_methylation_calling) {
+        ch_samplesheet
+            .filter { meta, _reads -> meta.entry_point == 'fastq' }
+            .map { meta, _reads ->
+                error("Sample '${meta.id}' provides FASTQ input but methylation calling is active. FASTQ-derived BAMs lack MM/ML base-modification tags. Use --skip_methylation_calling or provide uBAM/BAM input.")
+            }
+    }
 
     // Portello requires BAM/uBAM input — error if any FASTQ sample is present when portello is active
     if (!val_skip_portello) {
