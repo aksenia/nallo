@@ -243,9 +243,12 @@ workflow NALLO {
         }
     }
 
-    // For genome assembly: map bam/vcf entry_point samples to their aligned_bam column
+    // For genome assembly: map bam/vcf entry_point samples to their aligned_bam column.
+    // Strip samplesheet-only routing fields so the assembly BAM meta matches ch_aligned_bam
+    // when PORTELLO joins the two channels.
     ch_samplesheet_for_assembly = ch_samplesheet.map { meta, reads ->
-        meta.entry_point in ['bam', 'vcf'] ? [meta, meta.aligned_bam] : [meta, reads]
+        def clean_meta = meta - meta.subMap('aligned_bam', 'snv_vcf', 'sv_vcf')
+        meta.entry_point in ['bam', 'vcf'] ? [clean_meta, meta.aligned_bam] : [clean_meta, reads]
     }
 
     //
