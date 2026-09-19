@@ -759,6 +759,7 @@ workflow NALLO {
             .map { meta, _reads -> meta.family_id }
             .unique()
             .collect()
+            .ifEmpty([])
 
         // vcf entry families provide whole-genome VCFs directly; pass with plain family meta [id: FAM]
         // so SPLIT_MULTISAMPLE_VCF can match against ch_family_to_samples using .combine(by: 0)

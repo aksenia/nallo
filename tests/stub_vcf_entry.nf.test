@@ -37,7 +37,7 @@ nextflow_pipeline {
                 { assert !versions.containsKey('SNIFFLES') },
                 { assert !versions.containsKey('SVDB_MERGE') },
                 // Phasing should run since VCFs are provided
-                { assert versions.containsKey('WHATSHAP') || versions.containsKey('LONGPHASE') },
+                { assert versions.containsKey('WHATSHAP_STATS') || versions.containsKey('LONGPHASE_PHASE') },
                 { assert snapshot(
                     workflow.trace.succeeded().size(),
                     versions,
