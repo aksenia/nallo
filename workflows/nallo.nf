@@ -276,7 +276,14 @@ workflow NALLO {
         )
 
         // contains all FASTQ files, including those not converted
-        ch_genome_assembly_input = CONVERT_INPUT_BAMS.out.fastq.groupTuple()
+        // Strip routing fields so GENOME_ASSEMBLY meta matches ch_aligned_bam when PORTELLO joins them.
+        // When alignment_processes > 1 the input comes from SPLITUBAM (not ch_samplesheet_for_assembly)
+        // and still carries aligned_bam/snv_vcf/sv_vcf from the raw samplesheet meta.
+        ch_genome_assembly_input = CONVERT_INPUT_BAMS.out.fastq
+            .groupTuple()
+            .map { meta, fastqs ->
+                [meta - meta.subMap('aligned_bam', 'snv_vcf', 'sv_vcf'), fastqs]
+            }
 
         // Hifiasm assembly
         // Concatenate haplotypes per sample if portello is not skipped so it can be used for reads-to-assembly alignment
