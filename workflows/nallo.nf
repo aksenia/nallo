@@ -753,13 +753,16 @@ workflow NALLO {
         ch_phasing_snv_vcf = channel.empty()
         ch_phasing_snv_tbi = channel.empty()
 
-        // Collect vcf entry family IDs so add_mito can exclude them after phasing strips meta fields
+        // Collect vcf entry family IDs so add_mito can exclude them after phasing strips meta fields.
+        // Wrap in a Map to prevent Nextflow from treating an empty list [] as an empty tuple during
+        // combine(), which would add 0 elements instead of 1 and break the downstream map closure.
         ch_vcf_entry_family_ids = ch_samplesheet
             .filter { meta, _reads -> meta.entry_point == 'vcf' }
             .map { meta, _reads -> meta.family_id }
             .unique()
             .collect()
             .ifEmpty([])
+            .map { ids -> [vcf_ids: ids] }
 
         // vcf entry families provide whole-genome VCFs directly; pass with plain family meta [id: FAM]
         // so SPLIT_MULTISAMPLE_VCF can match against ch_family_to_samples using .combine(by: 0)
@@ -840,8 +843,8 @@ workflow NALLO {
             .join(BCFTOOLS_VIEW_PHASING.out.tbi, failOnMismatch: true, failOnDuplicate: true)
             .combine(ch_mito_nonempty)
             .combine(ch_vcf_entry_family_ids)
-            .map { meta, vcf, tbi, mito_nonempty, vcf_entry_ids ->
-                def add_mito = !val_skip_mitochondrial_calling && mito_nonempty && !(meta.family_id in vcf_entry_ids)
+            .map { meta, vcf, tbi, mito_nonempty, vcf_ids_wrap ->
+                def add_mito = !val_skip_mitochondrial_calling && mito_nonempty && !(meta.family_id in vcf_ids_wrap.vcf_ids)
                 [meta + [num_intervals: add_mito ? meta.num_intervals + 1 : meta.num_intervals], vcf, tbi]
             }
 
