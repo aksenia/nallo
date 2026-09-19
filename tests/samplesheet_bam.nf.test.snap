@@ -1,7 +1,7 @@
 {
     "samplesheet_bam | aligned_bam column": {
         "content": [
-            362,
+            363,
             {
                 "BCFTOOLS_CONCAT": {
                     "bcftools": 1.21
@@ -163,6 +163,9 @@
                 },
                 "METHBAT_PROFILE": {
                     "methbat": "0.17.0-7c5e249"
+                },
+                "MINIMAP2_INDEX": {
+                    "minimap2": "2.29-r1283"
                 },
                 "MITORSAW_HAPLOTYPE": {
                     "mitorsaw": "0.2.9-0dc8e58"
@@ -831,6 +834,9 @@
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_clinical.vcf.gz.tbi",
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_research.vcf.gz",
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_research.vcf.gz.tbi",
+                "snvs/family/FAM/unphased",
+                "snvs/family/FAM/unphased/FAM_concat.vcf.gz",
+                "snvs/family/FAM/unphased/FAM_concat.vcf.gz.tbi",
                 "snvs/sample",
                 "snvs/sample/HG002",
                 "snvs/sample/HG002/HG002_deepvariant_snvs.vcf.gz",
@@ -848,6 +854,9 @@
                 "svs/family/FAM/FAM_svs_annotated_ranked_clinical.vcf.gz.tbi",
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz",
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz.tbi",
+                "svs/family/FAM/unphased",
+                "svs/family/FAM/unphased/FAM_svdb_merge_by_family.vcf.gz",
+                "svs/family/FAM/unphased/FAM_svdb_merge_by_family.vcf.gz.tbi",
                 "visualization_tracks",
                 "visualization_tracks/HG002",
                 "visualization_tracks/HG002/HG002_hificnv.copynum.bedgraph",
@@ -874,8 +883,8 @@
             [
                 "HG002.baf.bed.gz:md5,6665b135f673d204ec030883683605ea",
                 "HG002.baf.bed.gz.tbi:md5,3e21a7933ca52383f0b8ccf221b05fc7",
-                "HG002.cov.bed.gz:md5,0ecae09658e7f861daae7d284b593550",
-                "HG002.cov.bed.gz.tbi:md5,443a996921bb33bc5cb26c8cc10d257c",
+                "HG002.cov.bed.gz:md5,04addec86adce344b4cf3df83ad632e5",
+                "HG002.cov.bed.gz.tbi:md5,d562f6f700997e84f33f212f781ca14b",
                 "HG003.baf.bed.gz:md5,6a75cd454070deb5cde78e194a6c4c76",
                 "HG003.baf.bed.gz.tbi:md5,825fca58be4323609111fe55f3a12406",
                 "HG003.cov.bed.gz:md5,4133276a3fe084c44b6760285f726515",
@@ -916,7 +925,7 @@
                 "HG002_chromograph_coverage_chr13.png:md5,954482b960865332f37d386da5c9fb75",
                 "HG002_chromograph_coverage_chr14.png:md5,954482b960865332f37d386da5c9fb75",
                 "HG002_chromograph_coverage_chr15.png:md5,954482b960865332f37d386da5c9fb75",
-                "HG002_chromograph_coverage_chr16.png:md5,03e125af3625fd9e9a2f46a74d6b1905",
+                "HG002_chromograph_coverage_chr16.png:md5,34608326b0dc61f1932ce676962e2ece",
                 "HG002_chromograph_coverage_chr17.png:md5,be840a7d21b9b4006ac8301a3caf5b4a",
                 "HG002_chromograph_coverage_chr18.png:md5,954482b960865332f37d386da5c9fb75",
                 "HG002_chromograph_coverage_chr19.png:md5,954482b960865332f37d386da5c9fb75",
@@ -931,8 +940,8 @@
                 "HG002_chromograph_coverage_chr7.png:md5,954482b960865332f37d386da5c9fb75",
                 "HG002_chromograph_coverage_chr8.png:md5,954482b960865332f37d386da5c9fb75",
                 "HG002_chromograph_coverage_chr9.png:md5,954482b960865332f37d386da5c9fb75",
-                "HG002_chromograph_coverage_chrM.png:md5,d0d145e4e2036aab688002b0163acc8d",
-                "HG002_chromograph_coverage_chrX.png:md5,5789feaeeae60a7b00b6e87acc958427",
+                "HG002_chromograph_coverage_chrM.png:md5,f8b3af5db305513f712f17941962f315",
+                "HG002_chromograph_coverage_chrX.png:md5,396d5ba4d250214a723094c4449137dd",
                 "HG002_chromograph_coverage_chrY.png:md5,954482b960865332f37d386da5c9fb75",
                 "HG003_chromograph_autozyg_chr1.png:md5,33d95212be5bf91fbea53500bcbba19c",
                 "HG003_chromograph_autozyg_chr10.png:md5,33d95212be5bf91fbea53500bcbba19c",
@@ -1034,8 +1043,8 @@
                 "HG004_chromograph_coverage_chrM.png:md5,90de157b814be5dbca58b7719572192a",
                 "HG004_chromograph_coverage_chrX.png:md5,1b98fd0d646c6fa24a923eeebab1c19f",
                 "HG004_chromograph_coverage_chrY.png:md5,954482b960865332f37d386da5c9fb75",
-                "HG002_pbcpgtools.combined.bed.gz:md5,b85674dbf7a7034386fa2db606893b57",
-                "HG002_pbcpgtools.combined.bed.gz.tbi:md5,77d935996125eae470d0648609bccac1",
+                "HG002_pbcpgtools.combined.bed.gz:md5,510566dfac748bb6ba8eae0d8b8416a8",
+                "HG002_pbcpgtools.combined.bed.gz.tbi:md5,90ae4eebbc401d6c3630bc04b0965e87",
                 "HG002_pbcpgtools.hap1.bed.gz:md5,23c944121757e96e697e4af83059ebca",
                 "HG002_pbcpgtools.hap1.bed.gz.tbi:md5,75984e5d2fb5932c07f2313a42401814",
                 "HG002_pbcpgtools.hap2.bed.gz:md5,25d776bf2ecda21f476a2d6d0fa61360",
@@ -1055,41 +1064,41 @@
                 "bcftools-stats-subtypes.txt:md5,9a5918630790359c9f56c583b6cf0c9a",
                 "bcftools_stats_indel-lengths.txt:md5,518d9c0612ee3772bd13e269cb929772",
                 "fastqc-status-check-heatmap.txt:md5,f67860347368dd43ec3be3a53e1085dc",
-                "fastqc_adapter_content_plot.txt:md5,27001dc0f94066ef56d3c49a71f7d0cc",
-                "fastqc_overrepresented_sequences_plot.txt:md5,d8125f2a6525ff73700b9d1dac88095c",
+                "fastqc_adapter_content_plot.txt:md5,96718bb782a387344efdfc3a069ea817",
+                "fastqc_overrepresented_sequences_plot.txt:md5,c043bafb51d9be47e18bed17e84386e5",
                 "fastqc_per_base_n_content_plot.txt:md5,a1b9be680733df6b9dda4c1f43ce0460",
-                "fastqc_per_base_sequence_quality_plot.txt:md5,c6ba78916683019a1277f99bce896957",
-                "fastqc_per_sequence_gc_content_plot_Counts.txt:md5,bfb6d554e3ee0f220a799dfa5164f3f4",
-                "fastqc_per_sequence_gc_content_plot_Percentages.txt:md5,0a4833e2a769f32beca09a6b23e6cba5",
-                "fastqc_per_sequence_quality_scores_plot.txt:md5,867abb89fd1c566a9941377730184fbd",
-                "fastqc_sequence_counts_plot.txt:md5,bbe2555ac04c174b2c81861e924ec9fe",
-                "fastqc_sequence_duplication_levels_plot.txt:md5,b4e121cbc44c880b7538a5bda98b1525",
-                "fastqc_sequence_length_distribution_plot.txt:md5,6fe38926ef273349cd04466fafbed621",
-                "mosdepth-coverage-per-contig-multi.txt:md5,616e7dcc5e9cc51d58bcf06fbb003d53",
-                "mosdepth-cumcoverage-dist-id.txt:md5,174bdb4cf7a66d797d899bc82611b1f6",
-                "mosdepth_cov_dist.txt:md5,529251eb84817d1346184d21a0a15511",
-                "mosdepth_cumcov_dist.txt:md5,529251eb84817d1346184d21a0a15511",
-                "mosdepth_perchrom.txt:md5,3028e766c7dac25271ae85dd3530c2f6",
+                "fastqc_per_base_sequence_quality_plot.txt:md5,73198764c374cf01fc2aa0165ff65edd",
+                "fastqc_per_sequence_gc_content_plot_Counts.txt:md5,73ea703c9e291f8e151bc32854aef66d",
+                "fastqc_per_sequence_gc_content_plot_Percentages.txt:md5,6497de6f46e9f75ce7c884faacfa58e0",
+                "fastqc_per_sequence_quality_scores_plot.txt:md5,28a5e65e8aa8c94cd73768c46c59c0a9",
+                "fastqc_sequence_counts_plot.txt:md5,36a9ee1593aa48a4e99a301fb8d211a7",
+                "fastqc_sequence_duplication_levels_plot.txt:md5,5be6fde8f53bf6cecbca7c1f77eff936",
+                "fastqc_sequence_length_distribution_plot.txt:md5,f95c7a6e67c87eaa4992405dfabafe51",
+                "mosdepth-coverage-per-contig-multi.txt:md5,432848da2c081f36c50a8ddd4ae83b0b",
+                "mosdepth-cumcoverage-dist-id.txt:md5,141ef74238cd6f5232424bf1ba4e0430",
+                "mosdepth_cov_dist.txt:md5,0ae1ebbc400706c24de331d98a6b405b",
+                "mosdepth_cumcov_dist.txt:md5,0ae1ebbc400706c24de331d98a6b405b",
+                "mosdepth_perchrom.txt:md5,e278e3d669249181cc73ca5421dcee54",
                 "multiqc_bcftools_stats.txt:md5,bde59835db1cd3f3282d0e3c128dba2c",
                 "multiqc_citations.txt:md5,b3367d20aa6e8306ca1c32c0f5993899",
-                "multiqc_fastqc.txt:md5,1672c3d8b4e5948f08d17af808872dc9",
-                "multiqc_general_stats.txt:md5,51ef864863a640d089294aad62b9206a",
+                "multiqc_fastqc.txt:md5,ded82be2d5363bef79652ecf4bf24ea4",
+                "multiqc_general_stats.txt:md5,6ff9445f7e3c5635cc87cba7ecaacbe4",
                 "multiqc_whatshap_phased_bp_plot.txt:md5,84b18ab73d2569912d69a20b3b2bf869",
                 "peddy_relatedness_plot.txt:md5,ccb7576c82712746a7805e4b08f8de11",
-                "somalier_stats.txt:md5,22bd1aabdb8da1fe0e49f5a4469bdf79",
+                "somalier_stats.txt:md5,2087a0114648e698a828f29eac18f5e4",
                 "whatshap-stats-table.txt:md5,a1106b186a72a87be2bea69d4e5ef4d4",
                 "FAM.ped:md5,c1be629e4d55fe3bd2b661c340ddedc1",
-                "HG002_cramino_aligned_phased.arrow:md5,43d836c524b00c87ccf80a322e47294d",
+                "HG002_cramino_aligned_phased.arrow:md5,59218ecb157374692c12a6ffc63ad0e0",
                 "HG003_cramino_aligned_phased.arrow:md5,3dbdcb3873a561fc10192f5c4326d4d5",
                 "HG004_cramino_aligned_phased.arrow:md5,ac265cafb998cf639f1efd0d6de3eb7b",
-                "HG002_cramino_aligned.arrow:md5,43d836c524b00c87ccf80a322e47294d",
+                "HG002_cramino_aligned.arrow:md5,59218ecb157374692c12a6ffc63ad0e0",
                 "HG003_cramino_aligned.arrow:md5,3dbdcb3873a561fc10192f5c4326d4d5",
                 "HG004_cramino_aligned.arrow:md5,ac265cafb998cf639f1efd0d6de3eb7b",
-                "HG002.mosdepth.global.dist.txt:md5,bbbf2f189639abc10f8060d05e0c740a",
-                "HG002.mosdepth.region.dist.txt:md5,446642d136a7912c38f316d3b580c341",
-                "HG002.mosdepth.summary.txt:md5,addfea4c00252510e652165818d2d1be",
-                "HG002.regions.bed.gz:md5,c79f343659389701feea388704da4b89",
-                "HG002.regions.bed.gz.csi:md5,9900ba2fb7f8d801d819060ceb2eee93",
+                "HG002.mosdepth.global.dist.txt:md5,e550f23c23fb25565de66e50d8cedf84",
+                "HG002.mosdepth.region.dist.txt:md5,37e272c54826150c8456c7859f3aae4f",
+                "HG002.mosdepth.summary.txt:md5,14abaad13cc529c1e93675d6b7f71acf",
+                "HG002.regions.bed.gz:md5,147fd862f577cd9d99f565a69ff13e5b",
+                "HG002.regions.bed.gz.csi:md5,c5d556d9609ea10975e041bf58781ed6",
                 "HG003.mosdepth.global.dist.txt:md5,c69600c29853afe20cc06141556fc1ae",
                 "HG003.mosdepth.region.dist.txt:md5,3201d574e34182cca5474ea00d240658",
                 "HG003.mosdepth.summary.txt:md5,8dc97a3e293569fc09c56d841806f356",
@@ -1119,13 +1128,13 @@
                 "HG004_whatshap_stats.gtf.gz:md5,bbe8ad019edcf079d26f1645c79fe2c5",
                 "HG004_whatshap_stats.gtf.gz.tbi:md5,de03190e068e222d46a3fb2749af7f27",
                 "HG004_whatshap_stats.tsv:md5,6e6d05553bccd870a2c234f6587e7c77",
-                "HG002_sambamba_depth.bed:md5,80651b14642d6f193f34d7d76be3a46e",
+                "HG002_sambamba_depth.bed:md5,7acdc503fab76e33fa6b00446a82971c",
                 "HG003_sambamba_depth.bed:md5,6b87e82e7624db10f2d15a890bcfe6cf",
                 "HG004_sambamba_depth.bed:md5,ad9af0d845359cfd0ee86e478e5960d7",
-                "HG002_hificnv.copynum.bedgraph:md5,16e291a1d8d9378fc430810b2083b6e4",
-                "HG002_hificnv.depth.bw:md5,63b13831adc144f78a2a17cd6ba9a65e",
-                "HG002_hificnv.maf.bw:md5,7d84dd575c12b556373107ca0a7a7ba5",
-                "HG002_pbcpgtools.combined.bw:md5,c0748f7b8fb1f77892b0eab18d978cd2",
+                "HG002_hificnv.copynum.bedgraph:md5,d9f899d17bebcbb6e1b3e4a593ece3d8",
+                "HG002_hificnv.depth.bw:md5,73951a6eb4f47f0f5f3c89a9243bbbcf",
+                "HG002_hificnv.maf.bw:md5,c56d5595cc537591a4bda214715ef223",
+                "HG002_pbcpgtools.combined.bw:md5,364560bf139066bba4500dcc9dd63297",
                 "HG002_pbcpgtools.hap1.bw:md5,9bc2fde6a47087e8ee3f433422228375",
                 "HG002_pbcpgtools.hap2.bw:md5,e744626ec53bab864676d2b6f9191d0b",
                 "HG003_hificnv.copynum.bedgraph:md5,ae903b00036ac3a24be0e3e4abff3594",
@@ -1144,7 +1153,7 @@
             [
                 [
                     "HG002_haplotagged.bam",
-                    "e79a24733159f6ddf609f3a7aebea2e2"
+                    "f8c3b1118e5539d5593a03a469de541c"
                 ],
                 [
                     "HG003_haplotagged.bam",
@@ -1220,6 +1229,10 @@
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM, chr20], sampleCount=3, variantCount=261, phased=false, phasedAutodetect=false]"
                 ],
                 [
+                    "FAM_concat.vcf.gz",
+                    "VcfFile [chromosomes=[chrX, chr16, chr17, chr20], sampleCount=3, variantCount=217, phased=false, phasedAutodetect=false]"
+                ],
+                [
                     "HG002_deepvariant_snvs.vcf.gz",
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chr20], sampleCount=1, variantCount=175, phased=false, phasedAutodetect=false]"
                 ],
@@ -1238,13 +1251,17 @@
                 [
                     "FAM_svs_annotated_ranked_research.vcf.gz",
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM], sampleCount=3, variantCount=38, phased=false, phasedAutodetect=false]"
+                ],
+                [
+                    "FAM_svdb_merge_by_family.vcf.gz",
+                    "VcfFile [chromosomes=[chrX, chr16, chr17, chrM], sampleCount=3, variantCount=38, phased=false, phasedAutodetect=false]"
                 ]
             ],
             [
                 
             ]
         ],
-        "timestamp": "2026-09-10T16:56:39.558047802",
+        "timestamp": "2026-09-19T16:05:28.75965683",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
