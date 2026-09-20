@@ -1164,6 +1164,14 @@ workflow NALLO {
     //
     // Create methylation pileups with modkit or pbcpgtools, create methylation profile with methbat for pacbio
     //
+    if (!val_skip_modkit || !val_skip_methbat) {
+        ch_bam_bai
+            .filter { meta, _bam, _bai -> meta.entry_point == 'fastq' }
+            .map { meta, _bam, _bai ->
+                log.warn("Sample '${meta.id}': FASTQ input has no MM/ML modification tags - methylation calling skipped for this sample.")
+            }
+    }
+
     if (!val_skip_modkit) {
         CALL_METHYLATION_MODKIT(
             (!val_skip_phasing ? PHASING.out.haplotagged_bam_bai : ch_bam_bai).filter { meta, _bam, _bai -> meta.entry_point != 'fastq' },
