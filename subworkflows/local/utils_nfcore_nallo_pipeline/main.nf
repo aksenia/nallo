@@ -375,6 +375,29 @@ workflow PIPELINE_INITIALISATION {
             }
     }
 
+    // snv_vcf or sv_vcf without aligned_bam is not a valid combination
+    ch_samplesheet
+        .filter { meta, _reads ->
+            def snvSet = meta.snv_vcf && meta.snv_vcf != "0"
+            def svSet = meta.sv_vcf && meta.sv_vcf != "0"
+            def abSet = meta.aligned_bam && meta.aligned_bam != "0"
+            (snvSet || svSet) && !abSet
+        }
+        .map { meta, _reads ->
+            error("Sample '${meta.id}': snv_vcf or sv_vcf provided without aligned_bam. The vcf entry_point requires aligned_bam for QC and phasing.")
+        }
+
+    // Only one of snv_vcf/sv_vcf provided — both or neither
+    ch_samplesheet
+        .filter { meta, _reads ->
+            def snvSet = meta.snv_vcf && meta.snv_vcf != "0"
+            def svSet = meta.sv_vcf && meta.sv_vcf != "0"
+            snvSet != svSet
+        }
+        .map { meta, _reads ->
+            error("Sample '${meta.id}': only one of snv_vcf/sv_vcf is set. Both must be provided together for vcf entry_point.")
+        }
+
     // vcf entry_point requires phasing to integrate VCFs into the annotation pipeline
     if (val_skip_phasing) {
         ch_samplesheet
