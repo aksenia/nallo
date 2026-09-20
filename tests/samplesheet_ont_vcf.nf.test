@@ -9,16 +9,15 @@ nextflow_pipeline {
 
         when {
             params {
-                // VCFs are local files in assets/unphased/ont/ — samplesheet built dynamically
-                // so that ${projectDir} expands to an absolute path the Nextflow sandbox can resolve.
-                def vcfSnv  = "${projectDir}/assets/unphased/ont/FAM_concat.vcf.gz"
-                def vcfSv   = "${projectDir}/assets/unphased/ont/FAM_svdb_merge_by_family.vcf.gz"
+                // Dynamic samplesheet: local VCFs need absolute paths; hg002_* has sample ID "hg002".
+                def vcfSnv  = "${projectDir}/assets/unphased/ont/hg002_concat.vcf.gz"
+                def vcfSv   = "${projectDir}/assets/unphased/ont/hg002_svdb_merge.vcf.gz"
                 def bamBase = "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/1e84555134bb9638ad0dde49afd895e3192de3f0/testdata"
                 def ss = File.createTempFile("samplesheet_ont_vcf", ".csv")
                 ss.deleteOnExit()
                 ss.text = [
                     "project,sample,file,family_id,paternal_id,maternal_id,sex,phenotype,aligned_bam,snv_vcf,sv_vcf",
-                    "test,HG002_ONT,0,FAM,0,0,1,2,${bamBase}/HG002_ONT.bam,${vcfSnv},${vcfSv}",
+                    "test,hg002,0,hg002,0,0,1,2,${bamBase}/HG002_ONT.bam,${vcfSnv},${vcfSv}",
                 ].join("\n")
 
                 pipelines_testdata_base_path   = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/0a5412d2064120f06d87c327026e03bbf9e50835/'
