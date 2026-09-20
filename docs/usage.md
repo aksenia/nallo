@@ -61,29 +61,47 @@ First, you will need to create a samplesheet with information about the samples 
 --input '[path to samplesheet file]'
 ```
 
-It has to be a comma-separated file with seven columns and a header row, as shown in the example below:
+It has to be a comma-separated file with ten columns and a header row, as shown in the example below:
 
 ```console
-project,sample,file,family_id,paternal_id,maternal_id,sex,phenotype
-testrun,HG002,/path/to/HG002_1.bam,NIST,HG003,0,1,2
-testrun,HG002,/path/to/HG002_2.bam,NIST,HG003,0,1,2
-testrun,HG003,/path/to/HG003.fastq.gz,NIST,0,0,2,1
+project,sample,file,family_id,paternal_id,maternal_id,sex,phenotype,aligned_bam,snv_vcf,sv_vcf
+testrun,HG002,/path/to/HG002_1.bam,NIST,HG003,0,1,2,0,0,0
+testrun,HG002,/path/to/HG002_2.bam,NIST,HG003,0,1,2,0,0,0
+testrun,HG003,/path/to/HG003.fastq.gz,NIST,0,0,2,1,0,0,0
 ```
 
-| Fields        | Description                                                                                                                       |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `project`     | Project name must be provided and cannot contain spaces, needs to be the same for all samples.                                    |
-| `sample`      | Custom sample name, cannot contain spaces.                                                                                        |
-| `file`        | Absolute path to a BAM or gzipped FASTQ file. File has to have the extension ".fastq.gz", .fq.gz" or ".bam".                      |
-| `family_id`   | Family ID must be provided and cannot contain spaces. If no family ID is available use the same ID as sample.                     |
-| `paternal_id` | Paternal ID must be provided and cannot contain spaces. If no paternal ID is available, use 0.                                    |
-| `maternal_id` | Maternal ID must be provided and cannot contain spaces. If no maternal ID is available, use 0.                                    |
-| `sex`         | Sex must be provided as 0, 1 or 2 (0=unknown; 1=male; 2=female). If sex is unknown it will be assigned automatically if possible. |
-| `phenotype`   | Affected status of patient (0 = missing; 1=unaffected; 2=affected).                                                               |
+| Fields        | Description                                                                                                                                                                      |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `project`     | Project name must be provided and cannot contain spaces, needs to be the same for all samples.                                                                                   |
+| `sample`      | Custom sample name, cannot contain spaces.                                                                                                                                       |
+| `file`        | Absolute path to an unaligned BAM or gzipped FASTQ file. File has to have the extension ".fastq.gz", ".fq.gz" or ".bam". Use `0` when providing an aligned BAM in `aligned_bam`. |
+| `family_id`   | Family ID must be provided and cannot contain spaces. If no family ID is available use the same ID as sample.                                                                    |
+| `paternal_id` | Paternal ID must be provided and cannot contain spaces. If no paternal ID is available, use 0.                                                                                   |
+| `maternal_id` | Maternal ID must be provided and cannot contain spaces. If no maternal ID is available, use 0.                                                                                   |
+| `sex`         | Sex must be provided as 0, 1 or 2 (0=unknown; 1=male; 2=female). If sex is unknown it will be assigned automatically if possible.                                                |
+| `phenotype`   | Affected status of patient (0 = missing; 1=unaffected; 2=affected).                                                                                                              |
+| `aligned_bam` | Absolute path to an already-aligned BAM file. Use `0` if not applicable.                                                                                                         |
+| `snv_vcf`     | Absolute path to a pre-called SNV VCF (`.vcf.gz`). A `.tbi` index must exist at `{snv_vcf}.tbi`. Use `0` if not applicable.                                                      |
+| `sv_vcf`      | Absolute path to a pre-called SV VCF (`.vcf.gz`). A `.tbi` index must exist at `{sv_vcf}.tbi`. Use `0` if not applicable.                                                        |
 
 !!!tip "Multiple files per sample"
 
     If you have multiple files per sample, they can be added on separate rows. Keep all columns except `file` identical for each sample. The files will be merged after alignment or before assembly.
+
+### Entry points
+
+The pipeline automatically detects the entry point for each sample from the samplesheet columns. All samples in the same family must share the same entry point.
+
+| `file` | `aligned_bam` | `snv_vcf` | `sv_vcf` | Entry point | Description                                         |
+| ------ | ------------- | --------- | -------- | ----------- | --------------------------------------------------- |
+| FASTQ  | `0`           | `0`       | `0`      | `fastq`     | Align, call SNVs/SVs, phase and annotate            |
+| uBAM   | `0`           | `0`       | `0`      | `ubam`      | Same as `fastq` plus methylation calling            |
+| `0`    | BAM           | `0`       | `0`      | `bam`       | Skip alignment; call SNVs/SVs, phase and annotate   |
+| `0`    | BAM           | VCF       | VCF      | `vcf`       | Skip alignment and calling; phase and annotate only |
+
+!!!tip "vcf entry point"
+
+    When using the `vcf` entry point, the `aligned_bam` is still required for QC, phasing and methylation calling. Provide the pre-called SNV and SV VCFs in `snv_vcf` and `sv_vcf`. The pipeline publishes pre-phasing joint family VCFs to `snvs/family/{family}/unphased/` and `svs/family/{family}/unphased/` on every run, which can be used as input for a subsequent `vcf` entry point run.
 
 ### Presets
 
