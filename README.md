@@ -71,10 +71,10 @@ Prepare a samplesheet with input data:
 `samplesheet.csv`
 
 ```
-project,sample,file,family_id,paternal_id,maternal_id,sex,phenotype
- my_project,HG002,/path/to/HG002.fastq.gz,NIST,HG003,HG004,1,2
- my_project,HG003,/path/to/HG003.bam,NIST,0,0,1,1
- my_project,HG004,/path/to/HG004.bam,NIST,0,0,2,1
+project,sample,file,family_id,paternal_id,maternal_id,sex,phenotype,aligned_bam,snv_vcf,sv_vcf
+my_project,HG002,/path/to/HG002.fastq.gz,NIST,HG003,HG004,1,2,0,0,0
+my_project,HG003,/path/to/HG003.bam,NIST,0,0,1,1,0,0,0
+my_project,HG004,/path/to/HG004.bam,NIST,0,0,2,1,0,0,0
 ```
 
 Supply a reference genome with `--fasta` and choose a matching `--preset` for your data (`revio`, `pacbio`, `ONT_R10` or `ONT_R10_AS`). Now, you can run the pipeline using:
