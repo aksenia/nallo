@@ -1171,7 +1171,7 @@ workflow NALLO {
     //
     if (!val_skip_modkit) {
         CALL_METHYLATION_MODKIT(
-            !val_skip_phasing ? PHASING.out.haplotagged_bam_bai : ch_bam_bai,
+            (!val_skip_phasing ? PHASING.out.haplotagged_bam_bai : ch_bam_bai).filter { meta, _bam, _bai -> meta.entry_point != 'fastq' },
             ch_fasta,
             ch_fai,
             ch_modkit_call_regions,
@@ -1181,7 +1181,7 @@ workflow NALLO {
 
     if (!val_skip_methbat) {
         CALL_METHYLATION_METHBAT(
-            !val_skip_phasing ? PHASING.out.haplotagged_bam_bai : ch_bam_bai,
+            (!val_skip_phasing ? PHASING.out.haplotagged_bam_bai : ch_bam_bai).filter { meta, _bam, _bai -> meta.entry_point != 'fastq' },
             ch_methbat_regions,
         )
 
