@@ -243,9 +243,7 @@ workflow NALLO {
         }
     }
 
-    // For genome assembly: map bam/vcf entry_point samples to their aligned_bam column.
-    // Strip samplesheet-only routing fields so the assembly BAM meta matches ch_aligned_bam
-    // when PORTELLO joins the two channels.
+    // Strip routing fields so assembly BAM meta matches ch_aligned_bam when PORTELLO joins.
     ch_samplesheet_for_assembly = ch_samplesheet.map { meta, reads ->
         def clean_meta = meta - meta.subMap('aligned_bam', 'snv_vcf', 'sv_vcf')
         meta.entry_point in ['bam', 'vcf'] ? [clean_meta, meta.aligned_bam] : [clean_meta, reads]
@@ -275,10 +273,7 @@ workflow NALLO {
             false,
         )
 
-        // contains all FASTQ files, including those not converted
-        // Strip routing fields so GENOME_ASSEMBLY meta matches ch_aligned_bam when PORTELLO joins them.
-        // When alignment_processes > 1 the input comes from SPLITUBAM (not ch_samplesheet_for_assembly)
-        // and still carries aligned_bam/snv_vcf/sv_vcf from the raw samplesheet meta.
+        // Strip routing fields; SPLITUBAM path carries raw samplesheet meta with those fields.
         ch_genome_assembly_input = CONVERT_INPUT_BAMS.out.fastq
             .groupTuple()
             .map { meta, fastqs ->
