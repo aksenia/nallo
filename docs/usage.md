@@ -110,7 +110,7 @@ The pipeline automatically detects the entry point for each sample from the samp
 
 !!!tip "vcf entry point"
 
-    `aligned_bam` is required alongside `snv_vcf` and `sv_vcf` - the BAM is still used for QC, phasing, and methylation calling. Providing VCF columns without `aligned_bam`, or providing only one of the two VCF columns, is an error. The pipeline publishes pre-phasing joint family VCFs to `snvs/family/{family}/unphased/` and `svs/family/{family}/unphased/` on every run, which can be used as input for a subsequent `vcf` entry point run.
+    `aligned_bam` is required alongside `snv_vcf` and `sv_vcf` - the BAM is still used for QC, phasing, and methylation calling. Providing VCF columns without `aligned_bam`, or providing only one of the two VCF columns, is an error. The pipeline publishes pre-phasing joint family VCFs to `snvs/family/{family}/{family}_snvs_unphased.vcf.gz` and `svs/family/{family}/{family}_svs_unphased.vcf.gz` on every run, which can be used as input for a subsequent `vcf` entry point run.
 
 ### Presets
 
