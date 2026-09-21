@@ -366,46 +366,9 @@ workflow PIPELINE_INITIALISATION {
     // Check that the parents are present in the samplesheet
     validateParentExistsInFamily(ch_samplesheet)
 
-    // Portello requires BAM/uBAM input — error if any FASTQ sample is present when portello is active
-    if (!val_skip_portello) {
-        ch_samplesheet
-            .filter { meta, _reads -> meta.entry_point == 'fastq' }
-            .map { meta, _reads ->
-                error("Sample '${meta.id}' provides FASTQ input but --skip_portello is not set. Portello requires BAM/uBAM input. Run with --skip_portello or provide BAM input.")
-            }
-    }
-
-    // snv_vcf or sv_vcf without aligned_bam is not a valid combination
-    ch_samplesheet
-        .filter { meta, _reads ->
-            def snvSet = meta.snv_vcf && meta.snv_vcf != "0"
-            def svSet = meta.sv_vcf && meta.sv_vcf != "0"
-            def bamSet = meta.aligned_bam && meta.aligned_bam != "0"
-            (snvSet || svSet) && !bamSet
-        }
-        .map { meta, _reads ->
-            error("Sample '${meta.id}': snv_vcf or sv_vcf provided without aligned_bam. The vcf entry_point requires aligned_bam for QC and phasing.")
-        }
-
-    // Only one of snv_vcf/sv_vcf provided — both or neither
-    ch_samplesheet
-        .filter { meta, _reads ->
-            def snvSet = meta.snv_vcf && meta.snv_vcf != "0"
-            def svSet = meta.sv_vcf && meta.sv_vcf != "0"
-            snvSet != svSet
-        }
-        .map { meta, _reads ->
-            error("Sample '${meta.id}': only one of snv_vcf/sv_vcf is set. Both must be provided together for vcf entry_point.")
-        }
-
-    // vcf entry_point requires phasing to integrate VCFs into the annotation pipeline
-    if (val_skip_phasing) {
-        ch_samplesheet
-            .filter { meta, _reads -> meta.entry_point == 'vcf' }
-            .map { meta, _reads ->
-                error("Sample '${meta.id}' uses vcf entry_point but --skip_phasing is set. Phasing is required to integrate vcf entry_point VCFs into the annotation pipeline.")
-            }
-    }
+    validatePortelloEntryPoint(ch_samplesheet, val_skip_portello)
+    validateVcfEntryPointColumns(ch_samplesheet)
+    validateVcfEntryPointRequiresPhasing(ch_samplesheet, val_skip_phasing)
 
     emit:
     samplesheet = ch_samplesheet
@@ -814,6 +777,51 @@ def validateWorkflowCompatibility(val_str_caller, val_skip_repeat_annotation, va
 
     if (!val_skip_phasing && !val_skip_sv_calling && val_phaser == 'hiphase' && val_sv_callers_to_merge != 'sawfish') {
         error("ERROR: HiPhase SV phasing only supports Sawfish at the moment. Set --sv_callers to 'sawfish' if you want to use HiPhase. You may run other SV callers without passing them to HiPhase using --sv_callers_to_run.")
+    }
+}
+
+def validatePortelloEntryPoint(input, val_skip_portello) {
+    if (!val_skip_portello) {
+        input
+            .filter { meta, _reads -> meta.entry_point == 'fastq' }
+            .map { meta, _reads ->
+                error("Sample '${meta.id}' provides FASTQ input but --skip_portello is not set. Portello requires BAM/uBAM input. Run with --skip_portello or provide BAM input.")
+            }
+    }
+}
+
+def validateVcfEntryPointColumns(input) {
+    // snv_vcf or sv_vcf without aligned_bam is not a valid combination
+    input
+        .filter { meta, _reads ->
+            def snvSet = meta.snv_vcf && meta.snv_vcf != "0"
+            def svSet = meta.sv_vcf && meta.sv_vcf != "0"
+            def bamSet = meta.aligned_bam && meta.aligned_bam != "0"
+            (snvSet || svSet) && !bamSet
+        }
+        .map { meta, _reads ->
+            error("Sample '${meta.id}': snv_vcf or sv_vcf provided without aligned_bam. The vcf entry_point requires aligned_bam for QC and phasing.")
+        }
+
+    // Only one of snv_vcf/sv_vcf provided — both or neither
+    input
+        .filter { meta, _reads ->
+            def snvSet = meta.snv_vcf && meta.snv_vcf != "0"
+            def svSet = meta.sv_vcf && meta.sv_vcf != "0"
+            snvSet != svSet
+        }
+        .map { meta, _reads ->
+            error("Sample '${meta.id}': only one of snv_vcf/sv_vcf is set. Both must be provided together for vcf entry_point.")
+        }
+}
+
+def validateVcfEntryPointRequiresPhasing(input, val_skip_phasing) {
+    if (val_skip_phasing) {
+        input
+            .filter { meta, _reads -> meta.entry_point == 'vcf' }
+            .map { meta, _reads ->
+                error("Sample '${meta.id}' uses vcf entry_point but --skip_phasing is set. Phasing is required to integrate vcf entry_point VCFs into the annotation pipeline.")
+            }
     }
 }
 
