@@ -72,6 +72,8 @@ include { SAMTOOLS_CALMD                                         } from '../modu
 include { MULTIQC                                                } from '../modules/nf-core/multiqc/main'
 include { PEDDY                                                  } from '../modules/nf-core/peddy/main'
 include { SPLITUBAM                                              } from '../modules/nf-core/splitubam/main'
+include { TABIX_TABIX as TABIX_VCF_ENTRY_SNV                     } from '../modules/nf-core/tabix/tabix/main'
+include { TABIX_TABIX as TABIX_VCF_ENTRY_SV                      } from '../modules/nf-core/tabix/tabix/main'
 include { paramsSummaryMap                                       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc                                   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML                                 } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -499,10 +501,12 @@ workflow NALLO {
         ch_snvs_per_family_unannotated_vcf_tbi = channel.empty()
 
         // vcf entry_point: use family SNV VCF from samplesheet directly; one VCF per family
-        ch_vcf_entry_family_snv = ch_samplesheet
+        ch_vcf_entry_family_snv_vcf = ch_samplesheet
             .filter { meta, _reads -> meta.entry_point == 'vcf' }
-            .map { meta, _reads -> [[id: meta.family_id], file(meta.snv_vcf), file("${meta.snv_vcf}.tbi")] }
-            .unique { meta, _vcf, _tbi -> meta.id }
+            .map { meta, _reads -> [[id: meta.family_id], meta.snv_vcf] }
+            .unique { meta, _vcf -> meta.id }
+
+        TABIX_VCF_ENTRY_SNV(ch_vcf_entry_family_snv_vcf)
 
         ch_bam_bai_for_snv_calling = ch_bam_bai.filter { meta, _bam, _bai -> meta.entry_point != 'vcf' }
 
@@ -628,8 +632,8 @@ workflow NALLO {
         ch_multiqc_files = ch_multiqc_files.mix(QC_SNVS.out.stats.collect { _meta, metrics -> metrics }.ifEmpty([]))
 
         // Mix called families with vcf entry families
-        family_snv_vcf = GVCF_GLNEXUS_NORM_VARIANTS.out.vcf.mix(ch_vcf_entry_family_snv.map { meta, vcf, _tbi -> [meta, vcf] })
-        family_snv_index = GVCF_GLNEXUS_NORM_VARIANTS.out.index.mix(ch_vcf_entry_family_snv.map { meta, _vcf, tbi -> [meta, tbi] })
+        family_snv_vcf = GVCF_GLNEXUS_NORM_VARIANTS.out.vcf.mix(ch_vcf_entry_family_snv_vcf)
+        family_snv_index = GVCF_GLNEXUS_NORM_VARIANTS.out.index.mix(TABIX_VCF_ENTRY_SNV.out.index)
 
         // Only called families have genome key; vcf entry families are excluded
         ch_snvs_per_family_unannotated_vcf_tbi = family_snv_vcf
@@ -671,10 +675,12 @@ workflow NALLO {
     if (!val_skip_sv_calling) {
 
         // vcf entry_point: use family SV VCF from samplesheet directly; one VCF per family
-        ch_vcf_entry_family_sv = ch_samplesheet
+        ch_vcf_entry_family_sv_vcf = ch_samplesheet
             .filter { meta, _reads -> meta.entry_point == 'vcf' }
-            .map { meta, _reads -> [[id: meta.family_id], file(meta.sv_vcf), file("${meta.sv_vcf}.tbi")] }
-            .unique { meta, _vcf, _tbi -> meta.id }
+            .map { meta, _reads -> [[id: meta.family_id], meta.sv_vcf] }
+            .unique { meta, _vcf -> meta.id }
+
+        TABIX_VCF_ENTRY_SV(ch_vcf_entry_family_sv_vcf)
 
         ch_bam_bai_for_sv_calling = ch_bam_bai.filter { meta, _bam, _bai -> meta.entry_point != 'vcf' }
 
@@ -739,8 +745,8 @@ workflow NALLO {
         )
 
         // Mix called families with vcf entry families
-        ch_merge_svs_family_vcf = MERGE_SVS.out.family_vcf.mix(ch_vcf_entry_family_sv.map { meta, vcf, _tbi -> [meta, vcf] })
-        ch_merge_svs_family_tbi = MERGE_SVS.out.family_tbi.mix(ch_vcf_entry_family_sv.map { meta, _vcf, tbi -> [meta, tbi] })
+        ch_merge_svs_family_vcf = MERGE_SVS.out.family_vcf.mix(ch_vcf_entry_family_sv_vcf)
+        ch_merge_svs_family_tbi = MERGE_SVS.out.family_tbi.mix(TABIX_VCF_ENTRY_SV.out.index)
     }
 
     //

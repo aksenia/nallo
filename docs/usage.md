@@ -87,11 +87,11 @@ Three additional columns - `aligned_bam`, `snv_vcf`, `sv_vcf` - are required whe
 
 **Optional columns** (required for `bam` and `vcf` entry points; omit or set to `0` otherwise)
 
-| Fields        | Description                                                                                                                                      |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `aligned_bam` | Absolute path to a pre-aligned BAM file. Required for `bam` and `vcf` entry points. Set `file` to `0` when this is provided.                     |
-| `snv_vcf`     | Absolute path to a pre-called SNV VCF (`.vcf.gz`). A `.tbi` index must exist at `{snv_vcf}.tbi`. Must be paired with `sv_vcf` and `aligned_bam`. |
-| `sv_vcf`      | Absolute path to a pre-called SV VCF (`.vcf.gz`). A `.tbi` index must exist at `{sv_vcf}.tbi`. Must be paired with `snv_vcf` and `aligned_bam`.  |
+| Fields        | Description                                                                                                                  |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `aligned_bam` | Absolute path to a pre-aligned BAM file. Required for `bam` and `vcf` entry points. Set `file` to `0` when this is provided. |
+| `snv_vcf`     | Absolute path to a pre-called SNV VCF (`.vcf.gz`). Must be paired with `sv_vcf` and `aligned_bam`.                           |
+| `sv_vcf`      | Absolute path to a pre-called SV VCF (`.vcf.gz`). Must be paired with `snv_vcf` and `aligned_bam`.                           |
 
 !!!tip "Multiple files per sample"
 
