@@ -310,11 +310,11 @@ workflow PIPELINE_INITIALISATION {
         .map { meta, reads ->
             // Derive entry_point from which column carries the input file (not from extension:
             // uBAM and aligned BAM share ".bam"; column position is the only signal).
-            def ab = meta.aligned_bam
+            def aligned_bam = meta.aligned_bam
             def snv = meta.snv_vcf
             def sv = meta.sv_vcf
             def entry_point
-            if (ab && ab != "0") {
+            if (aligned_bam && aligned_bam != "0") {
                 entry_point = (snv && snv != "0" && sv && sv != "0") ? "vcf" : "bam"
             }
             else if (reads.name =~ /\.bam$/) {
@@ -380,8 +380,8 @@ workflow PIPELINE_INITIALISATION {
         .filter { meta, _reads ->
             def snvSet = meta.snv_vcf && meta.snv_vcf != "0"
             def svSet = meta.sv_vcf && meta.sv_vcf != "0"
-            def abSet = meta.aligned_bam && meta.aligned_bam != "0"
-            (snvSet || svSet) && !abSet
+            def bamSet = meta.aligned_bam && meta.aligned_bam != "0"
+            (snvSet || svSet) && !bamSet
         }
         .map { meta, _reads ->
             error("Sample '${meta.id}': snv_vcf or sv_vcf provided without aligned_bam. The vcf entry_point requires aligned_bam for QC and phasing.")
@@ -822,9 +822,9 @@ def validateEntryPointConsistency(input) {
         .map { meta, _reads -> [meta.family_id, meta.entry_point, meta.id] }
         .groupTuple()
         .map { family_id, entry_points, sample_ids ->
-            def unique_eps = entry_points.unique()
-            if (unique_eps.size() > 1) {
-                def detail = [entry_points, sample_ids].transpose().collect { ep, sid -> "${sid}=${ep}" }.join(', ')
+            def unique_entrypoints = entry_points.unique()
+            if (unique_entrypoints.size() > 1) {
+                def detail = [entry_points, sample_ids].transpose().collect { entrypoint, sample_id -> "${sample_id}=${entrypoint}" }.join(', ')
                 error("Error: All samples in family '${family_id}' must use the same entry point (file, aligned_bam, or vcf entry_point columns). Found: ${detail}")
             }
         }
