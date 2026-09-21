@@ -692,9 +692,8 @@
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_clinical.vcf.gz.tbi",
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_research.vcf.gz",
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_research.vcf.gz.tbi",
-                "snvs/family/FAM/unphased",
-                "snvs/family/FAM/unphased/FAM_concat.vcf.gz",
-                "snvs/family/FAM/unphased/FAM_concat.vcf.gz.tbi",
+                "snvs/family/FAM/FAM_snvs_unphased.vcf.gz",
+                "snvs/family/FAM/FAM_snvs_unphased.vcf.gz.tbi",
                 "snvs/sample",
                 "snvs/sample/HG002",
                 "snvs/sample/HG002/HG002_deepvariant_snvs.vcf.gz",
@@ -712,9 +711,8 @@
                 "svs/family/FAM/FAM_svs_annotated_ranked_clinical.vcf.gz.tbi",
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz",
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz.tbi",
-                "svs/family/FAM/unphased",
-                "svs/family/FAM/unphased/FAM_svdb_merge_by_family.vcf.gz",
-                "svs/family/FAM/unphased/FAM_svdb_merge_by_family.vcf.gz.tbi",
+                "svs/family/FAM/FAM_svs_unphased.vcf.gz",
+                "svs/family/FAM/FAM_svs_unphased.vcf.gz.tbi",
                 "visualization_tracks",
                 "visualization_tracks/HG002",
                 "visualization_tracks/HG002/HG002_hificnv.copynum.bedgraph",
@@ -739,7 +737,7 @@
                 "visualization_tracks/HG004/HG004_pbcpgtools.hap2.bw"
             ]
         ],
-        "timestamp": "2026-09-20T09:36:23.04660107",
+        "timestamp": "2026-09-21T17:10:28.849911278",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

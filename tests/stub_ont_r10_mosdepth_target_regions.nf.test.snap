@@ -282,13 +282,11 @@
                 "snvs",
                 "snvs/family",
                 "snvs/family/FAM",
-                "snvs/family/FAM/unphased",
-                "snvs/family/FAM/unphased/FAM_concat.vcf.gz",
-                "snvs/family/FAM/unphased/FAM_concat.vcf.gz.tbi",
+                "snvs/family/FAM/FAM_snvs_unphased.vcf.gz",
+                "snvs/family/FAM/FAM_snvs_unphased.vcf.gz.tbi",
                 "snvs/family/FAM2",
-                "snvs/family/FAM2/unphased",
-                "snvs/family/FAM2/unphased/FAM2_concat.vcf.gz",
-                "snvs/family/FAM2/unphased/FAM2_concat.vcf.gz.tbi",
+                "snvs/family/FAM2/FAM2_snvs_unphased.vcf.gz",
+                "snvs/family/FAM2/FAM2_snvs_unphased.vcf.gz.tbi",
                 "snvs/sample",
                 "snvs/sample/HG002_ONT_A",
                 "snvs/sample/HG002_ONT_A/HG002_ONT_A_deepvariant_snvs.vcf.gz",
@@ -301,7 +299,7 @@
                 "snvs/sample/HG002_ONT_C/HG002_ONT_C_deepvariant_snvs.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-19T19:40:00.862137555",
+        "timestamp": "2026-09-21T17:28:06.460253424",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

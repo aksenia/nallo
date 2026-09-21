@@ -1,7 +1,7 @@
 {
     "stub | vcf entry_point | ONT single-sample": {
         "content": [
-            109,
+            111,
             {
                 "BCFTOOLS_CONCAT": {
                     "bcftools": 1.21
@@ -147,6 +147,12 @@
                     "tabix": 1.21
                 },
                 "TABIX_TABIX": {
+                    "tabix": 1.21
+                },
+                "TABIX_VCF_ENTRY_SNV": {
+                    "tabix": 1.21
+                },
+                "TABIX_VCF_ENTRY_SV": {
                     "tabix": 1.21
                 },
                 "TIDDIT_COV": {
@@ -298,7 +304,7 @@
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-18T19:41:06.53570078",
+        "timestamp": "2026-09-21T17:37:51.064568955",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -306,7 +312,7 @@
     },
     "stub | vcf entry_point | Revio trio": {
         "content": [
-            167,
+            169,
             {
                 "BCFTOOLS_CONCAT": {
                     "bcftools": 1.21
@@ -469,6 +475,12 @@
                     "tabix": 1.21
                 },
                 "TABIX_TABIX": {
+                    "tabix": 1.21
+                },
+                "TABIX_VCF_ENTRY_SNV": {
+                    "tabix": 1.21
+                },
+                "TABIX_VCF_ENTRY_SV": {
                     "tabix": 1.21
                 },
                 "TIDDIT_COV": {
@@ -804,7 +816,7 @@
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-18T19:40:00.701644979",
+        "timestamp": "2026-09-21T17:36:48.048225949",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

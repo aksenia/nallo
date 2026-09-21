@@ -644,9 +644,8 @@
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_clinical.vcf.gz.tbi",
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_research.vcf.gz",
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_research.vcf.gz.tbi",
-                "snvs/family/FAM/unphased",
-                "snvs/family/FAM/unphased/FAM_concat.vcf.gz",
-                "snvs/family/FAM/unphased/FAM_concat.vcf.gz.tbi",
+                "snvs/family/FAM/FAM_snvs_unphased.vcf.gz",
+                "snvs/family/FAM/FAM_snvs_unphased.vcf.gz.tbi",
                 "snvs/sample",
                 "snvs/sample/HG002_Revio",
                 "snvs/sample/HG002_Revio/HG002_Revio_deepvariant_snvs.vcf.gz",
@@ -658,9 +657,8 @@
                 "svs/family/FAM/FAM_svs_annotated_ranked_clinical.vcf.gz.tbi",
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz",
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz.tbi",
-                "svs/family/FAM/unphased",
-                "svs/family/FAM/unphased/FAM_svdb_merge_by_family.vcf.gz",
-                "svs/family/FAM/unphased/FAM_svdb_merge_by_family.vcf.gz.tbi",
+                "svs/family/FAM/FAM_svs_unphased.vcf.gz",
+                "svs/family/FAM/FAM_svs_unphased.vcf.gz.tbi",
                 "visualization_tracks",
                 "visualization_tracks/HG002_Revio",
                 "visualization_tracks/HG002_Revio/HG002_Revio_hificnv.copynum.bedgraph",
@@ -831,7 +829,7 @@
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM, chr20], sampleCount=1, variantCount=150, phased=false, phasedAutodetect=false]"
                 ],
                 [
-                    "FAM_concat.vcf.gz",
+                    "FAM_snvs_unphased.vcf.gz",
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chr20], sampleCount=1, variantCount=132, phased=false, phasedAutodetect=false]"
                 ],
                 [
@@ -847,7 +845,7 @@
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM], sampleCount=1, variantCount=13, phased=false, phasedAutodetect=false]"
                 ],
                 [
-                    "FAM_svdb_merge_by_family.vcf.gz",
+                    "FAM_svs_unphased.vcf.gz",
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM], sampleCount=1, variantCount=13, phased=false, phasedAutodetect=false]"
                 ]
             ],
@@ -855,7 +853,7 @@
                 
             ]
         ],
-        "timestamp": "2026-09-19T16:32:54.113370373",
+        "timestamp": "2026-09-21T17:05:20.443844176",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
