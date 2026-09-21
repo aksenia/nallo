@@ -101,12 +101,12 @@ Three additional columns - `aligned_bam`, `snv_vcf`, `sv_vcf` - are required whe
 
 The pipeline automatically detects the entry point for each sample from the samplesheet columns. All samples in the same family must share the same entry point.
 
-| `file` | `aligned_bam` | `snv_vcf` | `sv_vcf` | Entry point | Description                                         |
-| ------ | ------------- | --------- | -------- | ----------- | --------------------------------------------------- |
-| FASTQ  | `0`           | `0`       | `0`      | `fastq`     | Align, call SNVs/SVs, phase and annotate            |
-| uBAM   | `0`           | `0`       | `0`      | `ubam`      | Same as `fastq` plus methylation calling            |
-| `0`    | BAM           | `0`       | `0`      | `bam`       | Skip alignment; call SNVs/SVs, phase and annotate   |
-| `0`    | BAM           | VCF       | VCF      | `vcf`       | Skip alignment and calling; phase and annotate only |
+| `file` | `aligned_bam` | `snv_vcf` | `sv_vcf` | Entry point | Description                                                 |
+| ------ | ------------- | --------- | -------- | ----------- | ----------------------------------------------------------- |
+| FASTQ  | `0`           | `0`       | `0`      | `fastq`     | Align, call SNVs/SVs, phase and annotate                    |
+| uBAM   | `0`           | `0`       | `0`      | `ubam`      | Same as `fastq`; uBAM preserves sequencer modification tags |
+| `0`    | BAM           | `0`       | `0`      | `bam`       | Skip alignment; call SNVs/SVs, phase and annotate           |
+| `0`    | BAM           | VCF       | VCF      | `vcf`       | Skip alignment and calling; phase and annotate only         |
 
 !!!tip "vcf entry point"
 
