@@ -9,21 +9,8 @@ nextflow_pipeline {
 
         when {
             params {
-                // Dynamic samplesheet: local VCFs need absolute paths.
-                def vcfSnv  = "${projectDir}/assets/unphased/revio/FAM_snvs_unphased.vcf.gz"
-                def vcfSv   = "${projectDir}/assets/unphased/revio/FAM_svs_unphased.vcf.gz"
-                def bamBase = "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/1e84555134bb9638ad0dde49afd895e3192de3f0/testdata"
-                def ss = File.createTempFile("samplesheet_vcf", ".csv")
-                ss.deleteOnExit()
-                ss.text = [
-                    "project,sample,file,family_id,paternal_id,maternal_id,sex,phenotype,aligned_bam,snv_vcf,sv_vcf",
-                    "test,HG003,0,FAM,0,0,1,1,${bamBase}/HG003_PacBio_Revio.bam,${vcfSnv},${vcfSv}",
-                    "test,HG002,0,FAM,HG003,HG004,1,2,${bamBase}/HG002_PacBio_Revio.bam,${vcfSnv},${vcfSv}",
-                    "test,HG004,0,FAM,0,0,2,1,${bamBase}/HG004_PacBio_Revio.bam,${vcfSnv},${vcfSv}",
-                ].join("\n")
-
-                pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/0a5412d2064120f06d87c327026e03bbf9e50835/'
-                input                        = ss.absolutePath
+                pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/402a6f01e0ffae997a653023749488793ce3391e/'
+                input                        = "$projectDir/assets/samplesheet_vcf.csv"
                 outdir                       = "$outputDir"
                 paraphrase_output_format     = 'json'
                 skip_genome_assembly         = true

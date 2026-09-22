@@ -4,13 +4,13 @@ nextflow_pipeline {
     script "../main.nf"
     tag "PIPELINE"
 
-    test("samplesheet_ont_vcf | vcf entry_point | ONT single-sample") {
+    test("samplesheet_ont_vcf | vcf entry_point | ONT family") {
         tag "samplesheet_ont_vcf"
 
         when {
             params {
-                pipelines_testdata_base_path   = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/0a5412d2064120f06d87c327026e03bbf9e50835/'
-                input                          = "$projectDir/assets/samplesheet_ont_vcf_hg002.csv"
+                pipelines_testdata_base_path   = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/402a6f01e0ffae997a653023749488793ce3391e/'
+                input                          = "$projectDir/assets/samplesheet_ont_vcf.csv"
                 outdir                         = "$outputDir"
                 preset                         = 'ONT_R10'
                 alignment_processes            = 1
