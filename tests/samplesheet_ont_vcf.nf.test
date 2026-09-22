@@ -4,7 +4,7 @@ nextflow_pipeline {
     script "../main.nf"
     tag "PIPELINE"
 
-    test("samplesheet_ont_vcf | vcf entry_point | ONT family") {
+    test("samplesheet_ont_vcf | vcf entry_point | ONT singleton") {
         tag "samplesheet_ont_vcf"
 
         when {
