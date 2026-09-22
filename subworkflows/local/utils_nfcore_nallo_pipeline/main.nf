@@ -783,9 +783,9 @@ def validateWorkflowCompatibility(val_str_caller, val_skip_repeat_annotation, va
 def validatePortelloEntryPoint(input, val_skip_portello) {
     if (!val_skip_portello) {
         input
-            .filter { meta, _reads -> meta.entry_point in ['fastq', 'aligned_bam'] }
+            .filter { meta, _reads -> meta.entry_point != 'ubam' }
             .map { meta, _reads ->
-                error("Sample '${meta.id}' provides FASTQ/BAM input but --skip_portello is not set. Portello requires uBAM input. Run with --skip_portello or provide uBAM input.")
+                error("Sample '${meta.id}' uses ${meta.entry_point} entry_point but --skip_portello is not set. Portello requires uBAM input. Run with --skip_portello or provide uBAM input.")
             }
     }
 }
