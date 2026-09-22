@@ -671,6 +671,8 @@ workflow NALLO {
     //
     ch_merge_svs_family_vcf = channel.empty()
     ch_merge_svs_family_tbi = channel.empty()
+    ch_svs_per_family_merged_vcf = channel.empty()
+    ch_svs_per_family_merged_tbi = channel.empty()
 
     if (!val_skip_sv_calling) {
 
@@ -744,9 +746,12 @@ workflow NALLO {
             ch_vcfexpress_prelude,
         )
 
-        // Mix called families with vcf entry families
+        // Mix called families with vcf entry families for downstream use (phasing, annotation)
         ch_merge_svs_family_vcf = MERGE_SVS.out.family_vcf.mix(ch_vcf_entry_family_sv_vcf)
         ch_merge_svs_family_tbi = MERGE_SVS.out.family_tbi.mix(TABIX_VCF_ENTRY_SV.out.index)
+        // Publish only pipeline-produced VCFs (vcf entry files are user inputs, not republished)
+        ch_svs_per_family_merged_vcf = MERGE_SVS.out.family_vcf
+        ch_svs_per_family_merged_tbi = MERGE_SVS.out.family_tbi
     }
 
     //
@@ -763,6 +768,8 @@ workflow NALLO {
 
         ch_phasing_snv_vcf = channel.empty()
         ch_phasing_snv_tbi = channel.empty()
+        ch_snvs_family_joint_vcf = channel.empty()
+        ch_snvs_family_joint_tbi = channel.empty()
 
         // Collect vcf entry family IDs so add_mito can exclude them after phasing strips meta fields.
         // Wrap in a Map to prevent Nextflow from treating an empty list [] as an empty tuple during
@@ -807,6 +814,9 @@ workflow NALLO {
         // Mix called families (concatenated) with vcf entry families (already whole-genome)
         ch_phasing_snv_vcf = BCFTOOLS_CONCAT_PHASING.out.vcf.mix(ch_vcf_entry_phasing_vcf)
         ch_phasing_snv_tbi = BCFTOOLS_CONCAT_PHASING.out.tbi.mix(ch_vcf_entry_phasing_tbi)
+        // Publish only pipeline-produced VCFs (vcf entry files are user inputs, not republished)
+        ch_snvs_family_joint_vcf = BCFTOOLS_CONCAT_PHASING.out.vcf
+        ch_snvs_family_joint_tbi = BCFTOOLS_CONCAT_PHASING.out.tbi
 
         // Provide a PED file to let whatshap activate pedigree phasing
         // Or pass 'empty_PED' if 'whatshap_pedigree_phasing==false'
@@ -1418,14 +1428,14 @@ workflow NALLO {
     somalier_relate_samples             = val_skip_sex_check ? channel.empty() : BAM_INFER_SEX.out.somalier_samples // channel: [ val(meta), path(samples.tsv) ]
     snvs_sample_tbi                     = val_skip_snv_calling ? channel.empty() : VCF_CONCAT_NORM_VARIANTS.out.index // channel: [ val(meta), path(tbi) ]
     snvs_sample_vcf                     = val_skip_snv_calling ? channel.empty() : VCF_CONCAT_NORM_VARIANTS.out.vcf // channel: [ val(meta), path(vcf) ]
-    snvs_family_joint_tbi               = val_skip_phasing ? channel.empty() : ch_phasing_snv_tbi // channel: [ val(meta), path(tbi) ]
-    snvs_family_joint_vcf               = val_skip_phasing ? channel.empty() : ch_phasing_snv_vcf // channel: [ val(meta), path(vcf) ]
+    snvs_family_joint_tbi               = ch_snvs_family_joint_tbi // channel: [ val(meta), path(tbi) ]
+    snvs_family_joint_vcf               = ch_snvs_family_joint_vcf // channel: [ val(meta), path(vcf) ]
     snvs_family_tbi                     = val_skip_snv_calling ? channel.empty() : CONCAT_SORT_RANKED_SNVS.out.index // channel: [ val(meta), path(tbi) ]
     snvs_family_vcf                     = val_skip_snv_calling ? channel.empty() : CONCAT_SORT_RANKED_SNVS.out.vcf // channel: [ val(meta), path(vcf) ]
     svs_per_family_and_caller_tbi       = val_skip_sv_calling ? channel.empty() : MERGE_SVS.out.family_caller_tbi // channel: [ val(meta), path(tbi) ]
     svs_per_family_and_caller_vcf       = val_skip_sv_calling ? channel.empty() : MERGE_SVS.out.family_caller_vcf // channel: [ val(meta), path(vcf) ]
-    svs_per_family_merged_tbi           = val_skip_sv_calling ? channel.empty() : ch_merge_svs_family_tbi // channel: [ val(meta), path(tbi) ]
-    svs_per_family_merged_vcf           = val_skip_sv_calling ? channel.empty() : ch_merge_svs_family_vcf // channel: [ val(meta), path(vcf) ]
+    svs_per_family_merged_tbi           = ch_svs_per_family_merged_tbi // channel: [ val(meta), path(tbi) ]
+    svs_per_family_merged_vcf           = ch_svs_per_family_merged_vcf // channel: [ val(meta), path(vcf) ]
     svs_per_family_tbi                  = val_skip_sv_calling ? channel.empty() : ch_collect_tbi // channel: [ val(meta), path(tbi) ]
     svs_per_family_vcf                  = val_skip_sv_calling ? channel.empty() : ch_collect_svs // channel: [ val(meta), path(vcf.gz) ]
 }

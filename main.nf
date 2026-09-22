@@ -874,9 +874,7 @@ output {
         path { meta, _file -> "snvs/family/${meta.id}/" }
     }
     snvs_family_joint {
-        path { meta, file ->
-            "snvs/family/${meta.id}/${meta.id}_snvs_unphased${file.name.endsWith('.tbi') ? '.vcf.gz.tbi' : '.vcf.gz'}"
-        }
+        path { meta, _file -> "snvs/family/${meta.id}/" }
     }
     snvs_sample {
         path { meta, _file -> "snvs/sample/${meta.id}/" }
@@ -894,9 +892,7 @@ output {
         enabled params.publish_unannotated_family_svs
     }
     svs_per_family_merged {
-        path { meta, file ->
-            "svs/family/${meta.id}/${meta.id}_svs_unphased${file.name.endsWith('.tbi') ? '.vcf.gz.tbi' : '.vcf.gz'}"
-        }
+        path { meta, _file -> "svs/family/${meta.id}/" }
     }
     visualization_tracks {
         path { meta, _bw -> "visualization_tracks/${meta.id}/" }
