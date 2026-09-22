@@ -754,6 +754,9 @@ workflow NALLO {
         ch_svs_per_family_merged_tbi = MERGE_SVS.out.family_tbi
     }
 
+    ch_snvs_family_joint_vcf = channel.empty()
+    ch_snvs_family_joint_tbi = channel.empty()
+
     //
     // Phase SNVs, SVs and INDELs
     //
