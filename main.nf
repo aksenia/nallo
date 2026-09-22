@@ -875,7 +875,7 @@ output {
     }
     snvs_family_joint {
         path { meta, file ->
-            file >> "snvs/family/${meta.id}/${meta.id}_snvs_unphased${file.name.endsWith('.tbi') ? '.vcf.gz.tbi' : '.vcf.gz'}"
+            "snvs/family/${meta.id}/${meta.id}_snvs_unphased${file.name.endsWith('.tbi') ? '.vcf.gz.tbi' : '.vcf.gz'}"
         }
     }
     snvs_sample {
@@ -895,7 +895,7 @@ output {
     }
     svs_per_family_merged {
         path { meta, file ->
-            file >> "svs/family/${meta.id}/${meta.id}_svs_unphased${file.name.endsWith('.tbi') ? '.vcf.gz.tbi' : '.vcf.gz'}"
+            "svs/family/${meta.id}/${meta.id}_svs_unphased${file.name.endsWith('.tbi') ? '.vcf.gz.tbi' : '.vcf.gz'}"
         }
     }
     visualization_tracks {
