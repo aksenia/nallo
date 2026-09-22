@@ -22,6 +22,8 @@ nextflow_pipeline {
                 methbat_map                    = null
                 read_aligner                   = 'mm2plus'
                 assembly_aligner               = 'mm2plus'
+                sv_callers                     = 'sniffles,debreak'
+                sv_callers_to_run              = 'sniffles,debreak'
                 skip_genome_assembly           = true
                 skip_portello                  = true
             }
@@ -52,7 +54,8 @@ nextflow_pipeline {
                 // SNV and SV calling must run
                 { assert versions.containsKey('DEEPVARIANT_RUNDEEPVARIANT') },
                 { assert versions.containsKey('GLNEXUS') },
-                { assert versions.containsKey('RUN_SNIFFLES') || versions.containsKey('RUN_SEVERUS') },
+                { assert versions.containsKey('RUN_SNIFFLES') },
+                { assert versions.containsKey('RUN_DEBREAK') || versions.containsKey('DEBREAK') },
                 // Phasing must run (ONT_R10 preset with --phaser whatshap uses WhatsHap)
                 { assert versions.containsKey('WHATSHAP_PHASE') },
                 { assert snapshot(
