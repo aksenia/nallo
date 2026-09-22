@@ -12,7 +12,7 @@ nextflow_pipeline {
 
         when {
             params {
-                pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/402a6f01e0ffae997a653023749488793ce3391e/'
+                pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/8a22201f6ce50e69d3e1d4a2d9ed54e5f3d80c6e/'
                 input                        = "$projectDir/assets/samplesheet_vcf.csv"
                 outdir                       = "$outputDir"
                 // Skip steps not applicable to vcf entry_point
@@ -52,7 +52,7 @@ nextflow_pipeline {
 
         when {
             params {
-                pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/402a6f01e0ffae997a653023749488793ce3391e/'
+                pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/8a22201f6ce50e69d3e1d4a2d9ed54e5f3d80c6e/'
                 input                        = "$projectDir/assets/samplesheet_ont_vcf.csv"
                 outdir                       = "$outputDir"
                 preset                       = "ONT_R10"

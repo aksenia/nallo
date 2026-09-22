@@ -10,7 +10,7 @@ nextflow_pipeline {
 
         when {
             params {
-                pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/0a5412d2064120f06d87c327026e03bbf9e50835/'
+                pipelines_testdata_base_path = 'https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/8a22201f6ce50e69d3e1d4a2d9ed54e5f3d80c6e/'
                 input                        = "$projectDir/assets/samplesheet_multisample_ont_ubam.csv"
                 outdir                       = "$outputDir"
                 preset                       = "ONT_R10"
