@@ -1,7 +1,7 @@
 {
     "samplesheet_vcf | vcf entry_point | Revio trio": {
         "content": [
-            229,
+            231,
             {
                 "BCFTOOLS_CONCAT": {
                     "bcftools": 1.21
@@ -207,6 +207,12 @@
                     "tabix": 1.21
                 },
                 "TABIX_TABIX": {
+                    "tabix": 1.21
+                },
+                "TABIX_VCF_ENTRY_SNV": {
+                    "tabix": 1.21
+                },
+                "TABIX_VCF_ENTRY_SV": {
                     "tabix": 1.21
                 },
                 "TIDDIT_COV": {
@@ -708,6 +714,8 @@
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_clinical.vcf.gz.tbi",
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_research.vcf.gz",
                 "snvs/family/FAM/FAM_snvs_annotated_ranked_research.vcf.gz.tbi",
+                "snvs/family/FAM/FAM_snvs_unphased.vcf.gz.tbi",
+                "snvs/family/FAM/FAM_snvs_unphased.vcf.gz.tbi/FAM_snvs_unphased.vcf.gz.tbi",
                 "svs",
                 "svs/family",
                 "svs/family/FAM",
@@ -715,6 +723,8 @@
                 "svs/family/FAM/FAM_svs_annotated_ranked_clinical.vcf.gz.tbi",
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz",
                 "svs/family/FAM/FAM_svs_annotated_ranked_research.vcf.gz.tbi",
+                "svs/family/FAM/FAM_svs_unphased.vcf.gz.tbi",
+                "svs/family/FAM/FAM_svs_unphased.vcf.gz.tbi/FAM_svs_unphased.vcf.gz.tbi",
                 "visualization_tracks",
                 "visualization_tracks/HG002",
                 "visualization_tracks/HG002/HG002_pbcpgtools.combined.bw",
@@ -1066,7 +1076,7 @@
                 
             ]
         ],
-        "timestamp": "2026-09-20T09:42:20.437197168",
+        "timestamp": "2026-09-22T07:28:51.467519286",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
