@@ -18,8 +18,6 @@ nextflow_pipeline {
                 filter_variants_hgnc_ids       = null
                 skip_methylation_annotation    = true
                 methbat_map                    = null
-                read_aligner                   = 'mm2plus'
-                assembly_aligner               = 'mm2plus'
                 skip_genome_assembly           = true
                 skip_portello                  = true
             }
