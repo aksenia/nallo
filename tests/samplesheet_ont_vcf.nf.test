@@ -13,8 +13,6 @@ nextflow_pipeline {
                 input                          = "$projectDir/assets/samplesheet_ont_vcf.csv"
                 outdir                         = "$outputDir"
                 preset                         = 'ONT_R10'
-                alignment_processes            = 1
-                snv_calling_processes          = 1
                 hifiasm_mode                   = 'hifi-only'
                 phaser                         = 'whatshap'
                 filter_variants_hgnc_ids       = null
