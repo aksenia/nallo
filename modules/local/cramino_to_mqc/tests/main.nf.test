@@ -1,0 +1,33 @@
+nextflow_process {
+
+    name "Test Process CRAMINO_TO_MQC"
+    script "../main.nf"
+    process "CRAMINO_TO_MQC"
+
+    tag "modules"
+    tag "modules_local"
+    tag "cramino_to_mqc"
+
+    test("cramino_to_mqc - txt - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id: 'test' ],
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/genome/genome.fasta.fai', checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+}

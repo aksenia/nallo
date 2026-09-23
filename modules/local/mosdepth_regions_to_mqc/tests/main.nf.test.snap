@@ -1,0 +1,43 @@
+{
+    "mosdepth_regions_to_mqc - bed - stub": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_mqc.tsv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "1": [
+                    [
+                        "MOSDEPTH_REGIONS_TO_MQC",
+                        "python",
+                        "3.12.0"
+                    ]
+                ],
+                "mqc": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_mqc.tsv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "versions_python": [
+                    [
+                        "MOSDEPTH_REGIONS_TO_MQC",
+                        "python",
+                        "3.12.0"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-07-02T14:42:26.407081",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.4"
+        }
+    }
+}

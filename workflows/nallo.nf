@@ -451,6 +451,9 @@ workflow NALLO {
                 ? QC_ALIGNED_READS.out.mosdepth_regions_dist
                 : QC_ALIGNED_READS.out.mosdepth_global_dist).collect { _meta, metrics -> metrics }
         )
+        ch_multiqc_files = ch_multiqc_files.mix(QC_ALIGNED_READS.out.cramino_mqc.collect { _meta, mqc -> mqc }.ifEmpty([]))
+        ch_multiqc_files = ch_multiqc_files.mix(QC_ALIGNED_READS.out.mosdepth_regions_mqc.collect { _meta, mqc -> mqc }.ifEmpty([]))
+        ch_multiqc_files = ch_multiqc_files.mix(QC_ALIGNED_READS.out.mosdepth_iqr_mqc.collect { _meta, mqc -> mqc }.ifEmpty([]))
     }
 
     /*
@@ -753,9 +756,6 @@ workflow NALLO {
         ch_svs_per_family_merged_vcf = MERGE_SVS.out.family_vcf
         ch_svs_per_family_merged_tbi = MERGE_SVS.out.family_tbi
     }
-
-    ch_snvs_family_joint_vcf = channel.empty()
-    ch_snvs_family_joint_tbi = channel.empty()
 
     //
     // Phase SNVs, SVs and INDELs
