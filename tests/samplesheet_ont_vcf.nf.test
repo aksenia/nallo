@@ -13,11 +13,8 @@ nextflow_pipeline {
                 input                          = "$projectDir/assets/samplesheet_ont_vcf.csv"
                 outdir                         = "$outputDir"
                 preset                         = 'ONT_R10'
-                hifiasm_mode                   = 'hifi-only'
                 phaser                         = 'whatshap'
-                filter_variants_hgnc_ids       = null
                 skip_methylation_annotation    = true
-                methbat_map                    = null
                 skip_genome_assembly           = true
                 skip_portello                  = true
             }
