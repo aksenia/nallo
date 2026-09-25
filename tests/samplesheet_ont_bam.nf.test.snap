@@ -1,7 +1,7 @@
 {
     "samplesheet_ont_bam | bam entry_point | ONT singleton": {
         "content": [
-            122,
+            154,
             {
                 "BCFTOOLS_CONCAT": {
                     "bcftools": 1.21
@@ -80,6 +80,10 @@
                 "ECHTVAR_ANNO": {
                     "echtvar": "0.2.4"
                 },
+                "ENSEMBLVEP_FILTERVEP": {
+                    "ensemblvep": 116.1,
+                    "perl-math-cdf": 0.1
+                },
                 "ENSEMBLVEP_SNV": {
                     "ensemblvep": 116.1,
                     "perl-math-cdf": 0.1,
@@ -120,8 +124,12 @@
                 "GUNZIP_FASTA": {
                     "gunzip": 1.13
                 },
-                "MM2PLUS_INDEX": {
-                    "mm2plus": 1.3
+                "HTSLIB_BGZIPTABIX": {
+                    "htslib": 1.24,
+                    "xz": "5.8.3"
+                },
+                "MINIMAP2_INDEX": {
+                    "minimap2": "2.29-r1283"
                 },
                 "MODKIT_BEDMETHYLTOBIGWIG": {
                     "modkit": "0.6.1"
@@ -515,6 +523,8 @@
                 "snvs",
                 "snvs/family",
                 "snvs/family/hg002",
+                "snvs/family/hg002/hg002_snvs_annotated_ranked_clinical.vcf.gz",
+                "snvs/family/hg002/hg002_snvs_annotated_ranked_clinical.vcf.gz.tbi",
                 "snvs/family/hg002/hg002_snvs_annotated_ranked_research.vcf.gz",
                 "snvs/family/hg002/hg002_snvs_annotated_ranked_research.vcf.gz.tbi",
                 "snvs/family/hg002/hg002_snvs_unphased.vcf.gz",
@@ -526,6 +536,8 @@
                 "svs",
                 "svs/family",
                 "svs/family/hg002",
+                "svs/family/hg002/hg002_svs_annotated_ranked_clinical.vcf.gz",
+                "svs/family/hg002/hg002_svs_annotated_ranked_clinical.vcf.gz.tbi",
                 "svs/family/hg002/hg002_svs_annotated_ranked_research.vcf.gz",
                 "svs/family/hg002/hg002_svs_annotated_ranked_research.vcf.gz.tbi",
                 "svs/family/hg002/hg002_svs_unphased.vcf.gz",
@@ -667,6 +679,10 @@
                     "VcfFile [chromosomes=[chr20], sampleCount=1, variantCount=1, phased=true, phasedAutodetect=true]"
                 ],
                 [
+                    "hg002_snvs_annotated_ranked_clinical.vcf.gz",
+                    "VcfFile [chromosomes=[chr16], sampleCount=1, variantCount=56, phased=false, phasedAutodetect=false]"
+                ],
+                [
                     "hg002_snvs_annotated_ranked_research.vcf.gz",
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chrM, chr20], sampleCount=1, variantCount=134, phased=false, phasedAutodetect=false]"
                 ],
@@ -677,6 +693,10 @@
                 [
                     "hg002_deepvariant_snvs.vcf.gz",
                     "VcfFile [chromosomes=[chrX, chr16, chr17, chr20], sampleCount=1, variantCount=583, phased=false, phasedAutodetect=false]"
+                ],
+                [
+                    "hg002_svs_annotated_ranked_clinical.vcf.gz",
+                    "VcfFile [chromosomes=[chr16], sampleCount=1, variantCount=7, phased=false, phasedAutodetect=false]"
                 ],
                 [
                     "hg002_svs_annotated_ranked_research.vcf.gz",
@@ -691,7 +711,7 @@
                 
             ]
         ],
-        "timestamp": "2026-09-22T14:43:40.361828453",
+        "timestamp": "2026-09-25T12:48:52.96536616",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
