@@ -17,6 +17,7 @@ nextflow_pipeline {
                 phaser                         = 'whatshap'
                 skip_methylation_annotation    = true
                 sv_callers                     = 'sniffles,debreak'
+                sv_callers_to_run              = 'sniffles,debreak'
                 skip_genome_assembly           = true
                 skip_portello                  = true
             }
