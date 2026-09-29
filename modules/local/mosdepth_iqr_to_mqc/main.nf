@@ -23,7 +23,12 @@ process MOSDEPTH_IQR_TO_MQC {
 python3 << 'PYEOF'
 import gzip
 
-with gzip.open('${global_dist}', 'rt') as fh:
+def open_maybe_gzip(path):
+    with open(path, 'rb') as probe:
+        magic = probe.read(2)
+    return gzip.open(path, 'rt') if magic == b'\x1f\x8b' else open(path, 'rt')
+
+with open_maybe_gzip('${global_dist}') as fh:
     cum_fraction_by_cov = {}
     for line in fh:
         parts = line.strip().split('\t')

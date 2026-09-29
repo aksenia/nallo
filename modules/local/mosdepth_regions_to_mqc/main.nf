@@ -24,9 +24,14 @@ python3 << 'PYEOF'
 import gzip
 from collections import Counter
 
+def open_maybe_gzip(path):
+    with open(path, 'rb') as probe:
+        magic = probe.read(2)
+    return gzip.open(path, 'rt') if magic == b'\x1f\x8b' else open(path, 'rt')
+
 def parse_regions(path):
     by_region = {}
-    with gzip.open(path, 'rt') as fh:
+    with open_maybe_gzip(path) as fh:
         for line in fh:
             fields = line.rstrip('\\n').split('\\t')
             if not fields or fields[0].startswith('#'):
@@ -40,7 +45,7 @@ def parse_regions(path):
     return by_region
 
 def parse_thresholds(path):
-    with gzip.open(path, 'rt') as fh:
+    with open_maybe_gzip(path) as fh:
         lines = [l.rstrip('\\n') for l in fh]
     if not lines:
         return [], {}
