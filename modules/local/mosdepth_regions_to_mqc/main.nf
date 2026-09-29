@@ -27,7 +27,7 @@ from collections import Counter
 def open_maybe_gzip(path):
     with open(path, 'rb') as probe:
         magic = probe.read(2)
-    return gzip.open(path, 'rt') if magic == b'\x1f\x8b' else open(path, 'rt')
+    return gzip.open(path, 'rt') if magic == bytes([0x1f, 0x8b]) else open(path, 'rt')
 
 def parse_regions(path):
     by_region = {}
