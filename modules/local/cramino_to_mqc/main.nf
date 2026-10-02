@@ -40,7 +40,7 @@ with open('${cramino_txt}') as f:
         if len(parts) == 2:
             stats[parts[0]] = parts[1]
 row = [
-    '${prefix}',
+    '${meta.id}',
     stats.get('Number of reads', 'NA'),
     stats.get('Yield [Gb]', 'NA'),
     stats.get('Yield [Gb] (>25kb)', 'NA'),

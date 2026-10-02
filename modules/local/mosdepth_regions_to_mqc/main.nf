@@ -61,7 +61,7 @@ def parse_thresholds(path):
         by_region[(chrom, int(start), int(end))] = (name, counts)
     return threshold_vals, by_region
 
-sample_name = '${prefix}'
+sample_name = '${meta.id}'
 regions_data = parse_regions('${regions_bed}')
 threshold_vals, thresh_data = parse_thresholds('${thresholds_bed}')
 

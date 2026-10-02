@@ -69,7 +69,7 @@ lines = [
     "#         scale: 'RdYlGn-rev'",
     "#         namespace: 'Mosdepth'",
     "Sample\\tiqr_coverage\\tcoefficient_of_iqr_variance",
-    "${prefix}\\t" + iqr_str + "\\t" + iqr_cv_str,
+    "${meta.id}\\t" + iqr_str + "\\t" + iqr_cv_str,
 ]
 with open('${prefix}_mqc.tsv', 'w') as fh:
     fh.write('\\n'.join(lines) + '\\n')
