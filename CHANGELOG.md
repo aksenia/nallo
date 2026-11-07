@@ -55,7 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#1277](https://github.com/genomic-medicine-sweden/nallo/pull/1277) - Added `--filter_vep_snvs_expression` and `--filter_vep_svs_expression` for custom VEP annotation-based filtering of SNVs and SVs. Expressions can be used without an HGNC ID file or combined with `--filter_variants_hgnc_ids` using `and`; when bcftools filtering is also enabled, it runs before VEP filtering.
 - [#1287](https://github.com/genomic-medicine-sweden/nallo/pull/1287) - Added Kivvi for FSHD analysis (calls long D4Z4 repeats for FSHD resolution and KIV2 repeats for LPA)
 - [#1286](https://github.com/genomic-medicine-sweden/nallo/pull/1286) - Added `--paraphase_config` param to allow custom configuration of paraphase
-- [#XXXX](https://github.com/genomic-medicine-sweden/nallo/pull/XXXX) - Added haplotype comparison (HP1 vs HP2) over `--methylation_regions` with nf-core `modkit/dmr` for modkit methylation calling, run as part of methylation annotation
+- [#1329](https://github.com/genomic-medicine-sweden/nallo/pull/1329) - Added haplotype comparison (HP1 vs HP2) over `--methylation_regions` with nf-core `modkit/dmr` for modkit methylation calling, run as part of methylation annotation
 
 ### Changed
 
@@ -161,8 +161,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#1320](https://github.com/genomic-medicine-sweden/nallo/pull/1320) - Updated `longphase` modules to v2.1.1
 - [#1309](https://github.com/genomic-medicine-sweden/nallo/pull/1309) - Updated local `sentieon/dnascope-longread` module to [v2.0.1](https://github.com/Sentieon/sentieon-cli/releases/tag/v2.0.1)
 - [#1318](https://github.com/genomic-medicine-sweden/nallo/pull/1318) - Updated local modules `collapse_mitochondrial_gt` and `vep_prep_sv` to Python 3.14.4, and switched `create_pedigree_file` to a coreutils image, as it does not use Python
-- [#XXXX](https://github.com/genomic-medicine-sweden/nallo/pull/XXXX) - Renamed `--methbat_regions` to `--methylation_regions`, used by both methbat and modkit
-- [#XXXX](https://github.com/genomic-medicine-sweden/nallo/pull/XXXX) - Changed `--skip_methylation_annotation` to default to `false` whenever a methylation caller runs (previously only methbat); methylation annotation now requires phasing and `--methylation_regions`
+- [#1329](https://github.com/genomic-medicine-sweden/nallo/pull/1329) - Renamed `--methbat_regions` to `--methylation_regions`, used by both methbat and modkit
+- [#1329](https://github.com/genomic-medicine-sweden/nallo/pull/1329) - Changed `--skip_methylation_annotation` to default to `false` whenever a methylation caller runs (previously only methbat); methylation annotation now requires phasing and `--methylation_regions`
 
 ### Removed
 
